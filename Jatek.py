@@ -85,6 +85,8 @@ class OszlopOutOfRange(Error):
 class ErtekOutOfRange(Error):
     pass
 
+class NotEmpty(Error):
+    pass
 
 
 def lepes(tabla):
@@ -99,20 +101,18 @@ def lepes(tabla):
             sor_index = int(input('A sor indexe {1,2,3}: '))-1
             if sor_index not in range(0,3):
                 raise SorOutOfRange
-            break
-        except SorOutOfRange:
-            print("A sor indexének {1,2,3}-belinek kell lennie, próbálja újra.")
-
-    while True:
-        try:
             oszlop_index = int(input('Az oszlop indexe {1,2,3}: ')) - 1
             if oszlop_index not in range(0, 3):
                 raise OszlopOutOfRange
+            elif tabla[sor_index][oszlop_index] != -1:
+                raise NotEmpty
             break
+        except SorOutOfRange:
+            print("A sor indexének {1,2,3}-belinek kell lennie, próbálja újra.")
         except OszlopOutOfRange:
             print("Az oszlop indexének {1,2,3}-belinek kell lennie, próbálja újra.")
-
-    
+        except NotEmpty:
+            print("Csak üres mezőbe írhat, próbálja újra.")
 
     while True:
         try:
