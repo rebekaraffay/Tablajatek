@@ -7,49 +7,60 @@ másikuk a győztes."""
 
 import numpy as np
 
-
-def strat(tabla):
-    '''URES MEZO JELE -1'''
-    lista = [tabla[i, 0] == tabla[i, 2] for i in range(3)] + [tabla[0, 1] == tabla[2, 1]]
-    index = lista.index(False)
-    if index in range(3):
-        if tabla[index, 0] == -1:
-            tabla[index, 0] = tabla[index, 2]
-        else:
-            tabla[index, 2] = tabla[index, 0]
-    else:
-        if tabla[0, 1] == -1:
-            tabla[0, 1] = tabla[2, 1]
-        else:
-            tabla[2, 1] = tabla[0, 1]
-
 def azonos_sor_oszlop(tabla):
     for i in range(3):
         for j in range(3):
             if i != j:
                 # ez a 2 sor teli egyforma-e?
 
-                l = [np.where(tabla[i] == -1)]
-                if np.array_equal(tabla[i], tabla[j]) and len(l)==0:
+
+                if np.array_equal(tabla[i], tabla[j]) and -1 not in tabla[i]:
                     return True
                 # ez a 2 oszlop teli egyforma-e?
-                l = [np.where(tabla[:, i] == -1)]
-                if np.array_equal(tabla[:, i], tabla[:, j]) and len(l)==0:
+
+                if np.array_equal(tabla[:, i], tabla[:, j]) and -1 not in tabla[:, i]:
                     return True
     return False
 
+def van_oszlop(tabla):
+    for i in range(3):
+        van = True
+        for j in range(3):
+            if tabla[j,i] != 0:
+                van = False
+        if van:
+            return True
+    return False
+
+def van_sor(tabla):
+    for i in range(3):
+        van = True
+        for j in range(3):
+            if tabla[i,j] != 0:
+                van = False
+        if van:
+            return True
+    return False
 
 def check(tabla):
     """
         True: még megy tovább a játék.
         False: vége van, valaki nyert.
     """
-    l = [tabla[:, i] == np.array([0,0,0]) for i in range(3)] + [tabla[i, :] == np.array([0,0,0]) for i in range(3)]
-    if np.any(l, where=True):
+
+    van_nulla= (van_sor(tabla) or van_oszlop(tabla))
+    print(van_nulla, "nullak")
+
+
+    if van_nulla:
         win = True
     else:
         win = azonos_sor_oszlop(tabla)
-    if not(np.any(tabla[:, :], where=-1)) and not(win):
+
+    print(win, "win")
+    print(azonos_sor_oszlop(tabla), "azonosak")
+
+    if -1 not in tabla and not(win):
         print("The second player won.")
         return False
     elif win:
@@ -59,10 +70,23 @@ def check(tabla):
         return True
 
 def lepes(tabla):
-    sor_index = input('A sor indexe: ')
-    oszlop_index = input('Az oszlop indexe: ')
-    ertek = input('Az ertek: ')
-    tabla[int(sor_index)-1][int(oszlop_index)-1] = int(ertek)
+    sor_index = int(input('A sor indexe: '))-1
+    oszlop_index = int(input('Az oszlop indexe: '))-1
+    ertek = int(input('Az ertek: '))
+    tabla[sor_index][oszlop_index] = ertek
+    print(tabla)
+    check(tabla)
+    if check(tabla):
+
+        if oszlop_index==1:
+            tabla[2-sor_index][oszlop_index] = ertek
+        else:
+            tabla[sor_index][2-oszlop_index] = ertek
+        print(tabla)
+
+
+
+
     return tabla
 
 def jatek():
@@ -71,11 +95,11 @@ def jatek():
     print(tabla)
     tabla[1, 1] = 0
     print(tabla)
+    i = 0
     while check(tabla):
+        print(i)
+        i = i+1
         lepes(tabla)
-        check(tabla)
-        if check(tabla):
-            strat(tabla)
         check(tabla)
 
 
