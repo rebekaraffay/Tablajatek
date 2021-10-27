@@ -8,21 +8,24 @@ másikuk a győztes."""
 import numpy as np
 
 def azonos_sor_oszlop(tabla):
+    '''
+        Eldönti, hogy van-e 2 egyforma teli oszlop vagy sor.
+    '''
     for i in range(3):
         for j in range(3):
             if i != j:
                 # ez a 2 sor teli egyforma-e?
-
-
                 if np.array_equal(tabla[i], tabla[j]) and -1 not in tabla[i]:
                     return True
                 # ez a 2 oszlop teli egyforma-e?
-
                 if np.array_equal(tabla[:, i], tabla[:, j]) and -1 not in tabla[:, i]:
                     return True
     return False
 
 def van_oszlop(tabla):
+    '''
+        van csupa 0 oszlop.
+    '''
     for i in range(3):
         van = True
         for j in range(3):
@@ -33,6 +36,9 @@ def van_oszlop(tabla):
     return False
 
 def van_sor(tabla):
+    '''
+        Van csupa 0 sor.
+    '''
     for i in range(3):
         van = True
         for j in range(3):
@@ -46,61 +52,110 @@ def check(tabla):
     """
         True: még megy tovább a játék.
         False: vége van, valaki nyert.
+            1. nyert: Ha van csupa 0 vagy azonos sor / oszlop vagy
+            2. nyert: Ha az előzőek nem teljesülnek és tele van az egész.
     """
-
-    van_nulla= (van_sor(tabla) or van_oszlop(tabla))
-    print(van_nulla, "nullak")
-
-
+    # 1-nek jó:
+    van_nulla = (van_sor(tabla) or van_oszlop(tabla))
     if van_nulla:
         win = True
     else:
         win = azonos_sor_oszlop(tabla)
-
-    print(win, "win")
-    print(azonos_sor_oszlop(tabla), "azonosak")
-
+    # 2. nyer:
     if -1 not in tabla and not(win):
         print("The second player won.")
         return False
+    # 1. nyert
     elif win:
         print("The first player won.")
         return False
+    # meg nincs vege
     else:
         return True
 
+class Error(Exception):
+    pass
+
+class SorOutOfRange(Error):
+    pass
+
+class OszlopOutOfRange(Error):
+    pass
+
+class ErtekOutOfRange(Error):
+    pass
+
+
+
 def lepes(tabla):
-    sor_index = int(input('A sor indexe: '))-1
-    oszlop_index = int(input('Az oszlop indexe: '))-1
-    ertek = int(input('Az ertek: '))
+    '''
+        A felhasználótól elkérjük, hogy hova szeretne rakni, majd annak az értékét.
+        Ezután a gép "tükrözi" a lépését.
+    '''
+    # felhasznalo lepese
+    # helyes lepest hajtott-e vegre
+    while True:
+        try:
+            sor_index = int(input('A sor indexe {1,2,3}: '))-1
+            if sor_index not in range(0,3):
+                raise SorOutOfRange
+            break
+        except SorOutOfRange:
+            print("A sor indexének {1,2,3}-belinek kell lennie, próbálja újra.")
+
+    while True:
+        try:
+            oszlop_index = int(input('Az oszlop indexe {1,2,3}: ')) - 1
+            if oszlop_index not in range(0, 3):
+                raise OszlopOutOfRange
+            break
+        except OszlopOutOfRange:
+            print("Az oszlop indexének {1,2,3}-belinek kell lennie, próbálja újra.")
+
+    
+
+    while True:
+        try:
+            ertek = int(input('Az ertek {0,1}: '))
+            if ertek not in range(0, 2):
+                raise ErtekOutOfRange
+            break
+        except ErtekOutOfRange:
+            print("Az értéknek {0,1}-belinek kell lennie.")
+
     tabla[sor_index][oszlop_index] = ertek
+
+    print("Felhasznalo lepese: ")
     print(tabla)
+
     check(tabla)
+
+    # gep lepese
     if check(tabla):
-
-        if oszlop_index==1:
-            tabla[2-sor_index][oszlop_index] = ertek
+        if oszlop_index == 1:
+            tabla[2 - sor_index][oszlop_index] = ertek
         else:
-            tabla[sor_index][2-oszlop_index] = ertek
+            tabla[sor_index][2 - oszlop_index] = ertek
+        print("Gep lepese: ")
         print(tabla)
-
-
-
-
     return tabla
+
+
+
+
 
 def jatek():
     tabla = np.array([[-1, -1, -1], [-1, -1, -1], [-1, -1, -1]])
-    print(check(tabla))
+    print("Kezdo allapot: ")
     print(tabla)
     tabla[1, 1] = 0
+    print("Gep lepese: ")
     print(tabla)
     i = 0
     while check(tabla):
-        print(i)
         i = i+1
+        print(i , ". round:")
         lepes(tabla)
-        check(tabla)
 
 
 
