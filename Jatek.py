@@ -4,6 +4,7 @@ meg kell állapodni, hogy melyikük) nyer, ha van két  egyforma (teli)
 sor vagy oszlop, vagy ha 3 darab 0 került egy vonalba. Ha kilenc
 jel elhelyezése után egyik fenti feltétel sem  teljesül,
 másikuk a győztes."""
+import numpy as np
 
 
 def strat(tabla):
@@ -41,3 +42,7 @@ def jatek():
     tabla[1, 1] = 0
     print(tabla)
     while check != True:
+
+
+if __name__ == "__main__":
+    jatek()
