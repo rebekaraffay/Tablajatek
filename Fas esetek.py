@@ -1,12 +1,13 @@
 import itertools as it
+import numpy as np
 import Jatek
 
 def nodes():
-    """Megadja az osszes lehetseges tablaallast"""
+    """Megadja az osszes lehetseges tablaallast, most -1,1,0 ertekekkel es 3x3-as tablara"""
     a = it.product(range(-1,2), repeat=9) #az osszes lehetseges elem
     a = list(a)  # listaban
-    a = [np.reshape([j for j in a[i]], (3,3)) for i in range(len(a) - 1)] #npmatrixok listajat adja vissza
-    return a[0]
+    a = [np.reshape([j for j in a[i]], (3,3)) for i in range(len(a))] #npmatrixok listajat adja vissza
+    return a
 
 def nyeromezo(tabla):
     """Nyero mezok annak, akinek az a celja, hogy vagy csupa 0 vagy ket azonos sor/oszlop legyen
@@ -19,7 +20,7 @@ def nyeromezo(tabla):
     if van_nulla:
         win = True
     else:
-        win = azonos_sor_oszlop(tabla)
+        win = Jatek.azonos_sor_oszlop(tabla)
     # veszto mezo
     if -1 not in tabla and not (win):
         print("Ajjaj, vesztettel!")
@@ -36,17 +37,17 @@ def nyeromezo(tabla):
 
 def nyeromezok(lista):
     """nyeromezok annak, aki 0/azonos sorra/oszlopra torekedik"""
-    nyerok = [lista[i] for i in range(len(lista)-1) if nyeromezo(lista[i])==1]
+    nyerok = [lista[i] for i in range(len(lista)) if nyeromezo(lista[i]) == 1]
     return nyerok
 
 def vesztomezok(lista):
     """vesztomezok annak, aki 0/azonos sorra/oszlopra torekedik"""
-    vesztok = [lista[i] for i in range(len(lista)-1) if nyeromezo(lista[i])==0]
+    vesztok = [lista[i] for i in range(len(lista)) if nyeromezo(lista[i]) == 0]
     return vesztok
 
 def nemvegallapot(lista):
     """nem vegallapot, innen meg kell lepni"""
-    nv = [lista[i] for i in range(len(lista)-1) if nyeromezo(lista[i])==-1]
+    nv = [lista[i] for i in range(len(lista)) if nyeromezo(lista[i]) == -1]
     return nv
 
 def elek(tabla):
@@ -55,11 +56,19 @@ def elek(tabla):
     t = tabla.copy()
     for i in range(3):
         for j in range(3):
-            if tabla[i,j] != -1:
-                tabla[i,j]=-1
-                osok.append(tabla)
+            if tabla[i][j] != -1:
+                tabla[i][j] = -1
+                osok.append((t,tabla)) #t is kell, hogy ellista legyen. Igazabol majd stringesiteni kell, mert nxgraphnak csak olyan csucsa lehet
                 tabla = t
     return osok
+
+def ossz_el(lista):
+    """Egy listaban szereplo osszes csucs oseit visszaadja"""
+    ellista = [elek(lista[i]) for i in range(len(lista))]
+    return ellista
+
+#nxgraph kell innentol? Es amugy megnezni, hogy a nyerok osei kozott van-e csak nyerobe vezeto? Szoval lehet, hogy kellene egy
+#gyerek fuggveny is, nemcsak os? (De az kb ugyanaz, csak forditva)
 
 
 
