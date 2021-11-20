@@ -6,6 +6,18 @@ jel elhelyezése után egyik fenti feltétel sem  teljesül,
 másikuk a győztes."""
 
 import numpy as np
+import matplotlib.pyplot as plt
+
+def show(tabla):
+    fig, ax = plt.subplots()
+    min_val, max_val = 1, 3
+    ax.matshow(tabla, cmap=plt.cm.Blues)
+
+    for i in xrange(15):
+        for j in xrange(15):
+            c = intersection_matrix[j, i]
+            ax.text(i, j, str(c), va='center', ha='center')
+
 
 def azonos_sor_oszlop(tabla):
     '''
@@ -73,18 +85,15 @@ def check(tabla):
     else:
         return True
 
+# Hibaosztályok
 class Error(Exception):
     pass
-
 class SorOutOfRange(Error):
     pass
-
 class OszlopOutOfRange(Error):
     pass
-
 class ErtekOutOfRange(Error):
     pass
-
 class NotEmpty(Error):
     pass
 
@@ -126,7 +135,7 @@ def lepes(tabla):
     tabla[sor_index][oszlop_index] = ertek
 
     print("Felhasznalo lepese: ")
-    print(tabla)
+    show(tabla)
 
     check(tabla)
 
@@ -137,7 +146,7 @@ def lepes(tabla):
         else:
             tabla[sor_index][2 - oszlop_index] = ertek
         print("Gep lepese: ")
-        print(tabla)
+        show(tabla)
     return tabla
 
 
@@ -147,10 +156,10 @@ def lepes(tabla):
 def jatek():
     tabla = np.array([[-1, -1, -1], [-1, -1, -1], [-1, -1, -1]])
     print("Kezdo allapot: ")
-    print(tabla)
+    show(tabla)
     tabla[1, 1] = 0
     print("Gep lepese: ")
-    print(tabla)
+    show(tabla)
     i = 0
     while check(tabla):
         i = i+1
