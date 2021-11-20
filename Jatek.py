@@ -152,9 +152,6 @@ def lepes(tabla):
     return tabla
 
 
-
-
-
 def jatek():
     tabla = np.array([[-1, -1, -1], [-1, -1, -1], [-1, -1, -1]])
     print("Kezdo allapot: ")
@@ -167,8 +164,6 @@ def jatek():
         i = i+1
         print(i , ". round:")
         lepes(tabla)
-
-
 
 
 if __name__ == "__main__":

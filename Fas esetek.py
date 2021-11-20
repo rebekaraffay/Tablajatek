@@ -11,7 +11,7 @@ def nodes():
     a = [np.reshape([j for j in a[i]], (3, 3)) for i in range(len(a))]  # npmatrixok listajat adja vissza
     return a
 
-
+2
 def nyeromezo(tabla):
     """Nyero mezok annak, akinek az a celja, hogy vagy csupa 0 vagy ket azonos sor/oszlop legyen
     nyer = 1
@@ -61,8 +61,9 @@ def elek(tabla):
         for j in range(3):
             if tabla[i][j] != -1:
                 tabla[i][j] = -1
-                osok.append((str(tabla), str(t)))  # t is kell, hogy ellista legyen
-                tabla = t
+                if tabla not in nyeromezok(nodes()):
+                    osok.append((str(tabla), str(t)))  # t is kell, hogy ellista legyen
+                    tabla = t
     return osok
 
 
@@ -130,18 +131,14 @@ class Csucsok:
 class Error(Exception):
     pass
 
-
 class SorOutOfRange(Error):
     pass
-
 
 class OszlopOutOfRange(Error):
     pass
 
-
 class ErtekOutOfRange(Error):
     pass
-
 
 class NotEmpty(Error):
     pass
@@ -230,7 +227,7 @@ def strategia():
 
     # if hanyadik == 1 and celadas == 1:
         # erre egy megforditott nyeromezok fuggveny kell, de ennyi
-    # if hanyadik ==2 and celadas == 1:
+    # if hanyadik == 2 and celadas == 1:
         # erre is csak az es kesz
 
 
