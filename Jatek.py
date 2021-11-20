@@ -137,7 +137,7 @@ def lepes(tabla):
     tabla[sor_index][oszlop_index] = ertek
 
     print("Felhasznalo lepese: ")
-    show(tabla)
+    print(tabla)
 
     check(tabla)
 
@@ -148,7 +148,7 @@ def lepes(tabla):
         else:
             tabla[sor_index][2 - oszlop_index] = ertek
         print("Gep lepese: ")
-        show(tabla)
+        print(tabla)
     return tabla
 
 
