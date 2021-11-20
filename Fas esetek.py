@@ -190,24 +190,44 @@ def jatekos_lep(tabla):
     if Jatek.check(tabla):
         return tabla
 
+
 def Strategia():
     # mi a jatekos celja?
     # ki kezd?
+    while True:
+        try:
+            hanyadik = int(input("Hanyadik jatekos szeretnel lenni {1., 2.}?"))
+            if hanyadik != 1 and hanyadik != 2:
+                raise ErtekOutOfRange
+            break
 
-    #kezdoallapot
-    tabla = np.array([[-1, -1, -1], [-1, -1, -1], [-1, -1, -1]])
-    print("Kezdo allapot: ")
-    Jatek.show(tabla)
+        except ErtekOutOfRange:
+            print("1. vagy 2. jatekos lehetsz, {1, 2} ertekek kozul valassz")
 
-    hanyadik = input("Hanyadik jatekos szeretnel lenni {1., 2.}?")
+
+
+
+
+
     if hanyadik == 1:
+        tabla = np.array([[-1, -1, -1], [-1, -1, -1], [-1, -1, -1]])
+        print("Kezdo allapot: ")
+        Jatek.show(tabla)
         i = 0
         while Jatek.check(tabla):
-            i = i + 1
             print(i, ". round:")
+            i = i + 1
             jatekos_lep(tabla)
             allapot = Csucsok(jatekos_lep(tabla))
             allapot.lepes()
+
+
+    if hanyadik == 2:
+        Jatek.jatek()
+
+if __name__ == "__main__":
+    Strategia()
+
 
 
 

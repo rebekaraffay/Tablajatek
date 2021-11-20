@@ -6,7 +6,7 @@ jel elhelyezése után egyik fenti feltétel sem  teljesül,
 másikuk a győztes."""
 
 import numpy as np
-import matplotlib.pyplot as plt
+#import matplotlib.pyplot as plt
 
 def show(tabla):
     fig, ax = plt.subplots()
@@ -156,10 +156,10 @@ def lepes(tabla):
 def jatek():
     tabla = np.array([[-1, -1, -1], [-1, -1, -1], [-1, -1, -1]])
     print("Kezdo allapot: ")
-    show(tabla)
+    print(tabla)
     tabla[1, 1] = 0
     print("Gep lepese: ")
-    show(tabla)
+    print(tabla)
     i = 0
     while check(tabla):
         i = i+1
