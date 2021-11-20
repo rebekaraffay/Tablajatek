@@ -75,11 +75,11 @@ def check(tabla):
         win = azonos_sor_oszlop(tabla)
     # 2. nyer:
     if -1 not in tabla and not(win):
-        print("The second player won.")
+        print("The player won.")
         return False
     # 1. nyert
     elif win:
-        print("The first player won.")
+        print("The computer won.")
         return False
     # meg nincs vege
     else:
