@@ -8,7 +8,12 @@ másikuk a győztes."""
 import numpy as np
 import matplotlib.pyplot as plt
 
+
 def show(tabla):
+    print(tabla)
+
+
+#def show_2(tabla):
     fig, ax = plt.subplots()
     min_val, max_val = 1, 3
     ax.matshow(tabla, cmap=plt.cm.Blues)
