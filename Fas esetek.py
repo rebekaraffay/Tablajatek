@@ -113,7 +113,7 @@ class Csucsok:
                 return nyerobe / vesztobe
 
     def gyerekek(self):
-        """egy mezonek az gyerekeit adja vissza"""
+        """egy mezonek a gyerekeit adja vissza"""
         gyerekek = []
         t = self.csucs.copy()
         for i in range(3):
@@ -127,9 +127,9 @@ class Csucsok:
         return gyerekek
 
     def lepes(self):
-        aranyok = [nyero_arany(gyerek) for gyerek in gyerekek(self.csucs)]
+        aranyok = [self.nyero_arany(i) for i in self.gyerekek(self.csucs)]
         max_index = np.argmax(aranyok)
-        lepes = (gyerekek(self.csucs))[max_index]
+        lepes = (self.gyerekek(self.csucs))[max_index]
         Jatek.check(lepes)
         Jatek.show(lepes)
         if Jatek.check(lepes):
@@ -197,12 +197,12 @@ def Strategia():
     #kezdoallapot
     tabla = np.array([[-1, -1, -1], [-1, -1, -1], [-1, -1, -1]])
     print("Kezdo allapot: ")
-    show(tabla)
+    Jatek.show(tabla)
 
     hanyadik = input("Hanyadik jatekos szeretnel lenni {1., 2.}?")
     if hanyadik == 1:
         i = 0
-        while check(tabla):
+        while Jatek.check(tabla):
             i = i + 1
             print(i, ". round:")
             jatekos_lep(tabla)
