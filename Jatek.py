@@ -8,6 +8,8 @@ másikuk a győztes."""
 import numpy as np
 #import matplotlib.pyplot as plt
 
+
+
 def show(tabla):
     fig, ax = plt.subplots()
     min_val, max_val = 1, 3
