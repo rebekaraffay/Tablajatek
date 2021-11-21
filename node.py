@@ -30,5 +30,8 @@ class Node:
     def is_branch(self):
         return not self.is_leaf() and not self.is_root()
 
+    def is_sibling(self, parent, child):
+        
+
 
 

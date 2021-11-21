@@ -5,11 +5,17 @@ import networkx as nx
 
 
 def nodes():
+    import time
+    s = time.time()
     """Megadja az osszes lehetseges tablaallast, most -1,1,0 ertekekkel es 3x3-as tablara"""
     a = it.product(range(-1, 2), repeat=9)  # az osszes lehetseges elem
     a = list(a)  # listaban
     a = [np.reshape([j for j in a[i]], (3, 3)) for i in range(len(a))]  # npmatrixok listajat adja vissza
+    t = time.time()
+    print(t-s)
+    print(len(a))
     return a
+
 
 2
 def nyeromezo(tabla):
@@ -61,8 +67,8 @@ def elek(tabla):
         for j in range(3):
             if tabla[i][j] != -1:
                 tabla[i][j] = -1
-               if tabla not in nyeromezok(nodes())
-                    osok.append((str(tabla), str(t))) #t is kell, hogy ellista legyen. Igazabol majd stringesiteni kell, mert nxgraphnak csak olyan csucsa lehet
+            if tabla not in nyeromezok(nodes()):
+                osok.append((str(tabla), str(t))) #t is kell, hogy ellista legyen. Igazabol majd stringesiteni kell, mert nxgraphnak csak olyan csucsa lehet
             tabla = t
     return osok
 

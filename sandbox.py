@@ -1,3 +1,7 @@
+from Fas_esetek import nodes
+
+
+
 class A:
     def __init__(self, name):
         self._name = name
@@ -18,13 +22,9 @@ class A:
 
 
 def main():
-    a = A("Dorka")
-    a.greeting()
-    a.set_age(20)
-    a.greeting()
-    print(a._lista)
-    a.set_lista()
-    print(a._lista)
+    nodes()
+    nodes()
+    nodes()
 
 
 if __name__ == "__main__":
