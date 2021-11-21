@@ -1,8 +1,11 @@
+from state import State
+
+
 class Node:
-    def __init__(self, tabla):
+    def __init__(self, state):
         self.children = None
         self.parents = None
-        self.tabla = tabla
+        self.state = state
 
     def set_children(self, children):
         if self.children is not None:
@@ -27,5 +30,5 @@ class Node:
     def is_branch(self):
         return not self.is_leaf() and not self.is_root()
 
-    #def is_win(self, hanyadik, cel):
-        #TODO
+
+
