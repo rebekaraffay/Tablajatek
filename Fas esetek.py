@@ -61,9 +61,9 @@ def elek(tabla):
         for j in range(3):
             if tabla[i][j] != -1:
                 tabla[i][j] = -1
-                if tabla not in nyeromezok(nodes()):
-                    osok.append((str(tabla), str(t)))  # t is kell, hogy ellista legyen
-                    tabla = t
+               if tabla not in nyeromezok(nodes())
+                    osok.append((str(tabla), str(t))) #t is kell, hogy ellista legyen. Igazabol majd stringesiteni kell, mert nxgraphnak csak olyan csucsa lehet
+            tabla = t
     return osok
 
 
