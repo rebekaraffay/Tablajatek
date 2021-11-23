@@ -31,7 +31,12 @@ class Node:
         return not self.is_leaf() and not self.is_root()
 
     def is_sibling(self, parent, child):
-        
+        difference = parent - child     #todo
+        if np.count_nonzero(difference) == 1:
+            return True
+        return False
+
+
 
 
 

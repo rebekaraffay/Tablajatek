@@ -20,25 +20,25 @@ class Graph:
         #graf generalasa szintenkent gyerekek lista, keresztelek, fv: 2 tabla kozott 1 kul van-e, minden szulo-gyerek kapcs
         #ha vmi nyero helyzet, akkor ures lista gyerekeknek, levelek ne lehessenek osok, esetleg szurt szinteket eltarolni
 
-    def generate_new_level(self, last_level):
+    def generate_new_level(self):
         # legyártjuk az összes lehetőséget, nem csomópontból, n. szinten n helyen van érték
-
-        s = time.time()
 
         level = len(self.levels)
         temporary = [ [-1]*(9-level) + [0]*i + [1]*(level-i) for i in range(level+1)]
         perm = [set(permutations(temporary[i], 9)) for i in range(len(temporary))]
 
-        t = time.time()
-
         np_tables = [np.reshape(table_list, (3, 3)) for set_element in perm for table_list in set_element]
 
-
-        print("reshape nélkül",t-s)
-        k = time.time()
-        print("reshappel",k-s)
-
         return np_tables
+
+    def generate_edges(self, new_level, last_level):
+        for child in new_level:
+            for parent in last_level:
+                if Node.is_sibling(self, parent, child):
+                    #todo el hozzaadasa
+                    #todo szulo, gyerek listahoz hozzaadasa
+                    #todo ha nem vegallapot az os, akkor eltárolni következő last_levelnek
+
 
 
 
@@ -48,7 +48,9 @@ class Graph:
     #todo: kiszedni a nem kapcsolódó dolgokat (amik ősei nyertesek) -> nem teszem bele őket a következő tömbbe
     #todo: nyerő, vesztő mezők kigyűjtése
 
-    def is_parent(self, last_level, current_level):
+
+
+    def is_parent2(self, last_level, current_level):
         # Count occurrence of element '1 and 0' in each row and from that say if one is a parent of the other
         index_last = self.levels.index(last_level)  # how many elements are different from -1 (not empty)
         index_current = self.levels.index(current_level)
