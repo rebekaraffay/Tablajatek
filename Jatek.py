@@ -71,7 +71,7 @@ def check(tabla):
         return False
     # 1. nyert
     elif win:
-        print("The computer won.")
+        show.show(tabla, title="THE COMPUTER HAS WON")
         return False
     # meg nincs vege
     else:

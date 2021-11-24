@@ -17,7 +17,6 @@ def nodes():
     return a
 
 
-2
 def nyeromezo(tabla):
     """Nyero mezok annak, akinek az a celja, hogy vagy csupa 0 vagy ket azonos sor/oszlop legyen
     nyer = 1

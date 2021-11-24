@@ -5,9 +5,12 @@ from matplotlib.table import Table
 node = np.array(([1, 0, -1], [0, 0, 0], [-1, 1, -1]))
 
 
-def show(node):
+def show(node, title = None):
     """Shows the board"""
     board_show(node)
+    if title != None:
+        plt.title(title, size = 30, color = "red", y=0.4, pad=14)
+        return plt.show()
     plt.show()
 
 
@@ -39,6 +42,7 @@ def board_show(node):
         tb.add_cell(-1, j, width, height / 2, text=j + 1, loc='center',
                     edgecolor='none', facecolor='none')  #col labels are 1/2/3
     tb.set_fontsize(25)
+
 
     for (i, j), label in np.ndenumerate(node):
         if label == -1:
