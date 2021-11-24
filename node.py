@@ -1,11 +1,12 @@
 from state import State
-
+from win_state import WinState
 
 class Node:
     def __init__(self, state):
         self.children = None
         self.parents = None
         self.state = state
+        self.end = None
 
     def set_children(self, children):
         if self.children is not None:
@@ -17,10 +18,8 @@ class Node:
             print("This node's parents has already been set.")
         self.parents = parents
 
-    def is_leaf(self):
-        if self.children is None:
-            raise RuntimeError("Children are not set yet.")
-        return len(self.children) == 0
+    def is_leaf(self) -> bool:
+        return self.state.who_win() != WinState.UNDECIDED
 
     def is_root(self):
         if self.parents is None:
@@ -30,11 +29,7 @@ class Node:
     def is_branch(self):
         return not self.is_leaf() and not self.is_root()
 
-    def is_sibling(self, parent, child):
-        difference = parent - child     #todo
-        if np.count_nonzero(difference) == 1:
-            return True
-        return False
+
 
 
 

@@ -9,6 +9,9 @@ class State:
 
     def __init__(self, table):
         self.table = table
+        self.end = None
+
+
 
     def equal_row_or_column(self):
         '''
@@ -50,3 +53,8 @@ class State:
         elif -1 not in self.table:
             return WinState.OVER_WITHOUT
         return WinState.UNDECIDED
+
+    @staticmethod
+    def is_relate(parent: np.ndarray, child: np.ndarray) -> bool:
+        difference = parent - child
+        return np.count_nonzero(difference) == 1
