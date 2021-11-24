@@ -19,43 +19,31 @@ def check(tabla, strat):
     """
         True: még megy tovább a játék.
         False: vége van, valaki nyert.
-            1. nyert: Ha van csupa 0 vagy azonos sor / oszlop vagy
-            2. nyert: Ha az előzőek nem teljesülnek és tele van az egész.
     """
-    if strat == 1:  # 1-nek jó:
-        van_nulla = (Jatek.van_sor(tabla) or Jatek.van_oszlop(tabla))
-        if van_nulla:
-            win = True
-        else:
-            win = Jatek.azonos_sor_oszlop(tabla)
-        # 2. nyer:
-        if -1 not in tabla and not(win):
+    van_nulla = (Jatek.van_sor(tabla) or Jatek.van_oszlop(tabla))
+    if van_nulla:
+        win = True
+    else:
+        win = Jatek.azonos_sor_oszlop(tabla)
+    if -1 not in tabla and not(win):
+        if strat == 1:
             show.show(tabla, title="A masodik jatekos nyert")
             return False
-        # 1. nyert
-        elif win:
+        else:
             show.show(tabla, title="Az elso jatekos nyert")
             return False
-        # meg nincs vege
-        else:
-            return True
-    if strat == 2:  # 2-nek jó:
-        van_nulla = (Jatek.van_sor(tabla) or Jatek.van_oszlop(tabla))
-        if van_nulla:
-            win = True
-        else:
-            win = Jatek.azonos_sor_oszlop(tabla)
-        # 2. nyer:
-        if -1 not in tabla and not(win):
+    elif win:
+        if strat == 1:
             show.show(tabla, title="Az elso jatekos nyert")
             return False
-        # 1. nyert
-        elif win:
+        else:
             show.show(tabla, title="A masodik jatekos nyert")
             return False
-        # meg nincs vege
-        else:
-            return True
+
+    # meg nincs vege
+    else:
+        return True
+
 
 
 

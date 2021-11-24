@@ -10,6 +10,7 @@ import show
 
 #todo def valuechanger itt is, mert jobb lenne, ha x-et es o-t irna be a felhasznalo
 #todo print jatekszabalyok az elejen
+#todo check if a bemeneti ertek valoban int type-e
 
 def azonos_sor_oszlop(tabla):
     '''
