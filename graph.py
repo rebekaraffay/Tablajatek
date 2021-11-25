@@ -17,18 +17,20 @@ class Graph:
         self.root.set_parents([])
         self.levels = []                        # szintek elemeinek listáinak listája
         self.generate_graph()
+        self.Dict_levels = None
 
         #graf generalasa szintenkent gyerekek lista, keresztelek, fv: 2 tabla kozott 1 kul van-e, minden szulo-gyerek kapcs
         #ha vmi nyero helyzet, akkor ures lista gyerekeknek, levelek ne lehessenek osok, esetleg szurt szinteket eltarolni
 
-    def save_graph(self):
+    def set_dicts(self):
         '''
         Csináljunk szótárat és majd azt akarom elmenteni.
         '''
         Dict_levels = {}
-        for i in range(lenself.levels):
+        for i in range(len(self.levels)):
             Dict_levels[i] = self.levels[i]
-        Dict_children = {}
+        return Dict_levels
+        #Dict_children = {}
         # todo: generate_edgesben rögtön beadni? (problémám, hogy hogy menjek végig az összes csúcon,
         #  a gyerekeinek listája benne van a node osztályban
 
@@ -37,15 +39,18 @@ class Graph:
         '''
         Az első szintet a gyökérből képzem, majd rekurzívan az előzőekből, amíg nem csak levélből áll egy szint.
         '''
-        potty = time.perf_counter()
+        start = time.perf_counter()
         self.levels.append([self.root])
         leafless_new_level = self.generate_new_level([self.root])
         #while len(leafless_new_level) > 0:
-        for i in range(3):
-            print(f"Generated new level, time elapsed from start: {time.perf_counter()-potty}")
+        for i in range(2):
+            print(f"Generated new level, time elapsed from start: {time.perf_counter()-start}")
             leafless_new_level = self.generate_new_level(leafless_new_level)
             print(len(leafless_new_level))
-        print(f"Finished generation, time elapsed from start: {time.perf_counter() - potty}")
+        Dict_levels = self.set_dicts()
+        mutat = [ Dict_levels[1][i].state.table for i in range(len(Dict_levels[1]))]
+        print(mutat)
+        print(f"Finished generation, time elapsed from start: {time.perf_counter() - start}")
 
     def generate_new_level(self, leafless_current_level: List[Node]):
         '''
@@ -94,7 +99,7 @@ class Graph:
         for child in new_level:
             parents = [parent for parent in last_level if State.is_relate(parent.state.table, child.state.table)]
             child.set_parents(parents)
-            self.save_graph()
+            #self.save_graph()
         for parent in last_level:
             children = [child for child in new_level if State.is_relate(parent.state.table, child.state.table)]
             parent.set_children(children)
@@ -107,5 +112,4 @@ class Graph:
 
 if __name__ == "__main__":
     a = Graph()
-    print()
     # print(a.root.children[0].state.table)
