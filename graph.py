@@ -18,6 +18,8 @@ class Graph:
         self.levels = []                        # szintek elemeinek listáinak listája
         self.generate_graph()
         self.Dict_levels = None
+        self.Dict_children = None
+        self.Dict_parents = None
 
 
     def dict_into_file(self, dict):
@@ -27,22 +29,34 @@ class Graph:
     def set_dicts(self):
         '''
         Csináljunk szótárat és majd azt akarom elmenteni.
+        A levelek szótárban a gráf szinjeinek csúcsait tárolom el.
+        Szintén a self. levels segítségével végigjárom az összes csúcsot és elmentem a gyerekeket
+        és szülőket 1-1 szótárba, ahol az adott csúcs a kulcs.
         '''
         Dict_levels = {}
         for i in range(len(self.levels)):
-            Dict_levels[i] = self.levels[i]
+            Dict_levels[i] = [self.levels[i][j].state.table for j in range(len(self.levels[i]))]
         self.Dict_levels = Dict_levels
 
-            #for j in range(len(self.levels[i])):
-                #Dict_children[self.levels[i][j]] = self.levels[i][j].children
+        Dict_children = {}
+        for i in range(len(self.levels)):
+            for j in range(len(self.levels[i])):
+                Dict_children[self.levels[i][j]] = self.levels[i][j].children
+        self.Dict_children = Dict_children
 
         #Dict_children = {}
+        #for i in range(len(self.levels)):
+         #   for j in range(len(self.levels[i])):
+          #      node = self.levels[i][j]
+           #     Dict_children[str(node.state.table)] = [node.children[k].state.table for k in range(len(node.children))]
+        #self.Dict_children = Dict_children
 
+        Dict_parents = {}
+        for i in range(len(self.levels)):
+            for j in range(len(self.levels[i])):
+                Dict_parents[self.levels[i][j]] = self.levels[i][j].parents
+        self.Dict_parents = Dict_parents
 
-        return Dict_levels  # Dict_children
-
-        # todo: generate_edgesben rögtön beadni? (problémám, hogy hogy menjek végig az összes csúcon,
-        #  a gyerekeinek listája benne van a node osztályban
 
 
     def generate_graph(self):
@@ -59,11 +73,16 @@ class Graph:
             print(len(leafless_new_level))
         print(f"Finished generation, time elapsed from start: {time.perf_counter() - start}")
 
-        # dictionaryk
-        Dict_levels = self.set_dicts()
-        mutat = [Dict_levels[1][i].state.table for i in range(len(Dict_levels[1]))]
-        # mutat = [ Dict_children[1][i].state.table for i in range(len(Dict_children[1]))]
-        print(mutat)
+        self.set_dicts()
+        # Ellenőrzések
+        print("A levél szótár első szintjének 2. eleme: ", self.Dict_levels[1][2])
+        #level_dict_tables = [self.Dict_levels[1][i].state.table for i in range(len(self.Dict_levels[1]))]
+        children_dict_tables = [self.Dict_children[self.levels[1][2]][i].state.table for i in range(len(self.Dict_children[self.levels[1][2]]))]
+        #print("A levelek szótár 1. szinjének első csúcsának táblája ", level_dict_tables[1])
+        print("A gyerekek szótárból az első szint 2. csúcsának gyerekei: ", self.Dict_children[self.levels[1][2]])
+        print("A gyerekek szótárból az első szint 2. csúcsának gyerekeinek táblái: ", children_dict_tables)
+        print("A gráf 1. szintjének 2. eleme ", self.levels[1][2])
+        print("A szülők szótárból az első szint 2. elemének ősei (a gyökér) ", self.Dict_parents[self.levels[1][2]])
 
     def generate_new_level(self, leafless_current_level: List[Node]):
         '''

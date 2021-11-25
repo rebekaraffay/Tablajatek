@@ -1,3 +1,6 @@
+<<<<<<< HEAD
+#
+=======
 import json
 import graph
 import Fas_esetek
@@ -28,3 +31,4 @@ if __name__ == "__main__":
     #with open("proba_szoveg_kiiras_graf.json", "w") as write_file:
        # json.dump(adat, write_file)
 
+>>>>>>> 20cbdfa7bac9625640aa31b3d87fe0238dee2acf
