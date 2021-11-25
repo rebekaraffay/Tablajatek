@@ -1,4 +1,6 @@
 import itertools as it
+import time
+
 import numpy as np
 import Jatek
 import networkx as nx
@@ -12,8 +14,6 @@ def nodes():
     a = list(a)  # listaban
     a = [np.reshape([j for j in a[i]], (3, 3)) for i in range(len(a))]  # npmatrixok listajat adja vissza
     t = time.time()
-    print(t-s)
-    print(len(a))
     return a
 
 
@@ -58,6 +58,10 @@ def nemvegallapot(lista):
     return nv
 
 
+
+def arreq_in_list(myarr, list_arrays):
+    return next((True for elem in list_arrays if np.array_equal(elem, myarr)), False)
+
 def elek(tabla):
     """egy mezonek az oseit adja vissza"""
     osok = []
@@ -66,16 +70,22 @@ def elek(tabla):
         for j in range(3):
             if tabla[i][j] != -1:
                 tabla[i][j] = -1
-            if tabla not in nyeromezok(nodes()):
-                osok.append((str(tabla), str(t))) #t is kell, hogy ellista legyen. Igazabol majd stringesiteni kell, mert nxgraphnak csak olyan csucsa lehet
-            tabla = t
+
+
+                if not arreq_in_list(tabla, nyeromezok(nodes())):
+                    osok.append((str(tabla), str(t))) #t is kell, hogy ellista legyen. Igazabol majd stringesiteni kell, mert nxgraphnak csak olyan csucsa lehet
+
+                tabla = t
     return osok
 
 
 def ossz_el(lista):
+    s = time.time()
     """Egy listaban szereplo osszes csucs oseit visszaadja"""
     ellista = [elek(lista[i]) for i in range(len(lista))]
     ellista = [item for sublist in ellista for item in sublist]
+    t = time.time()
+    print(t-s)
     return ellista
 
 
@@ -237,4 +247,4 @@ def strategia():
 
 
 if __name__ == "__main__":
-    strategia()
+    ossz_el(nodes())
