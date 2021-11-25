@@ -8,10 +8,6 @@ másikuk a győztes."""
 import numpy as np
 import show
 
-#todo def valuechanger itt is, mert jobb lenne, ha x-et es o-t irna be a felhasznalo
-#todo print jatekszabalyok az elejen
-#todo check if a bemeneti ertek valoban int type-e
-
 def azonos_sor_oszlop(tabla):
     '''
         Eldönti, hogy van-e 2 egyforma teli oszlop vagy sor.
@@ -90,6 +86,11 @@ class ErtekOutOfRange(Error):
 class NotEmpty(Error):
     pass
 
+def value_changer(value):
+    if value == 'x':
+        return 1
+    if value == 'o':
+        return 0
 
 def lepes(tabla):
     '''
@@ -118,19 +119,21 @@ def lepes(tabla):
 
     while True:
         try:
-            ertek = int(input('Az ertek {0,1}: '))
-            if ertek not in range(0, 2):
+            ertek = str(input('Az ertek {x,o}: '))
+            if ertek not in ['x', 'o']:
                 raise ErtekOutOfRange
             break
         except ErtekOutOfRange:
-            print("Az értéknek {0,1}-belinek kell lennie.")
+            print("Az értéknek {o, x}nek kell lennie.")
+
+    ertek = value_changer(ertek)
 
     tabla[sor_index][oszlop_index] = ertek
 
     print("Felhasznalo lepese: ")
     show.show(tabla)
 
-    check(tabla)
+    #check(tabla)
 
     # gep lepese
     if check(tabla):

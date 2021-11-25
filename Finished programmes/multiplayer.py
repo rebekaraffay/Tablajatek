@@ -74,14 +74,15 @@ def jatekos_lep(tabla, strat, i):
 
     while True:
         try:
-            ertek = int(input('Az ertek {0,1}: '))
-            if ertek not in range(0, 2):
+            ertek = str(input('Az ertek {x,o}: '))
+            if ertek not in ['x', 'o']:
                 raise ErtekOutOfRange
             break
         except ErtekOutOfRange:
-            print("Az értéknek {0,1}-belinek kell lennie.")
+            print("Az értéknek {o, x}nek kell lennie.")
 
-    tabla[sor_index][oszlop_index] = ertek  # beirtuk a jatekos altal megadott erteket a megfelelo helyre
+    ertek = Jatek.value_changer(ertek)
+    tabla[sor_index][oszlop_index] = ertek
 
     if i%2==1:
         print(i // 2 + 1, ". round")
