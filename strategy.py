@@ -4,4 +4,3 @@ d = {}  # üres szótár, ekvivalens: d = dict()
 d["apple"] = 12
 d["plum"] = 2
 d[1]=4
-d
