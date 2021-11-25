@@ -70,12 +70,8 @@ def elek(tabla):
         for j in range(3):
             if tabla[i][j] != -1:
                 tabla[i][j] = -1
-
-
-                if nyeromezo(tabla)==False:
-                    osok.append((str(tabla), str(t))) #t is kell, hogy ellista legyen. Igazabol majd stringesiteni kell, mert nxgraphnak csak olyan csucsa lehet
-
-                    
+                if not nyeromezo(tabla):
+                    osok.append((str(tabla), str(t)))  # t is kell, hogy ellista legyen. Igazabol majd stringesiteni kell, mert nxgraphnak csak olyan csucsa lehet
                 tabla = t
     return osok
 
@@ -248,4 +244,8 @@ def strategia():
 
 
 if __name__ == "__main__":
-    ossz_el(nodes())
+    s = time.time()
+    d = nx.DiGraph()
+    d.add_edges_from(ossz_el(nodes()))
+    t = time.time()
+    print(s-t)
