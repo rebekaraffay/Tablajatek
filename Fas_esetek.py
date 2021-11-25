@@ -55,7 +55,7 @@ def ossz_el(lista):
     """Egy listaban szereplo osszes csucs oseit visszaadja"""
     ellista = [elek(lista[i]) for i in range(len(lista))]
     ellista = [item for sublist in ellista for item in sublist]
-    print(ellista[:10])
+
     t = time.time()
     print(t-s)
     return ellista
