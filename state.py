@@ -58,3 +58,9 @@ class State:
     def is_relate(parent: np.ndarray, child: np.ndarray) -> bool:
         difference = parent - child
         return np.count_nonzero(difference) == 1
+
+    def is_winner(self):
+        '''
+        Ha levél és nyerőállapot, vagy ha van olyan gyereke, amely nyerő állapot
+        '''
+        # todo

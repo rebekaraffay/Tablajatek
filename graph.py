@@ -6,6 +6,8 @@ from state import State
 #import itertools as it
 from itertools import permutations
 from typing import List
+import random
+import json
 
 
 class Graph:
@@ -19,6 +21,18 @@ class Graph:
         #graf generalasa szintenkent gyerekek lista, keresztelek, fv: 2 tabla kozott 1 kul van-e, minden szulo-gyerek kapcs
         #ha vmi nyero helyzet, akkor ures lista gyerekeknek, levelek ne lehessenek osok, esetleg szurt szinteket eltarolni
 
+    def save_graph(self):
+        '''
+        Csináljunk szótárat és majd azt akarom elmenteni.
+        '''
+        Dict_levels = {}
+        for i in range(lenself.levels):
+            Dict_levels[i] = self.levels[i]
+        Dict_children = {}
+        # todo: generate_edgesben rögtön beadni? (problémám, hogy hogy menjek végig az összes csúcon,
+        #  a gyerekeinek listája benne van a node osztályban
+
+
     def generate_graph(self):
         '''
         Az első szintet a gyökérből képzem, majd rekurzívan az előzőekből, amíg nem csak levélből áll egy szint.
@@ -26,7 +40,8 @@ class Graph:
         potty = time.perf_counter()
         self.levels.append([self.root])
         leafless_new_level = self.generate_new_level([self.root])
-        while len(leafless_new_level) > 0:
+        #while len(leafless_new_level) > 0:
+        for i in range(3):
             print(f"Generated new level, time elapsed from start: {time.perf_counter()-potty}")
             leafless_new_level = self.generate_new_level(leafless_new_level)
             print(len(leafless_new_level))
@@ -79,6 +94,7 @@ class Graph:
         for child in new_level:
             parents = [parent for parent in last_level if State.is_relate(parent.state.table, child.state.table)]
             child.set_parents(parents)
+            self.save_graph()
         for parent in last_level:
             children = [child for child in new_level if State.is_relate(parent.state.table, child.state.table)]
             parent.set_children(children)
