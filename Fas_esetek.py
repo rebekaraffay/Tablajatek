@@ -31,13 +31,13 @@ def nyeromezo(tabla):
         win = Jatek.azonos_sor_oszlop(tabla)
     # veszto mezo
     if -1 not in tabla and not win:
-        return 0
+        return True
     # nyero mezo
     elif win:
-        return 1
+        return True
 
     else:  # se nem nyertes se nem vesztes
-        return -1
+        return False
 
 
 def nyeromezok(lista):
@@ -72,9 +72,10 @@ def elek(tabla):
                 tabla[i][j] = -1
 
 
-                if not arreq_in_list(tabla, nyeromezok(nodes())):
+                if nyeromezo(tabla)==False:
                     osok.append((str(tabla), str(t))) #t is kell, hogy ellista legyen. Igazabol majd stringesiteni kell, mert nxgraphnak csak olyan csucsa lehet
 
+                    
                 tabla = t
     return osok
 
