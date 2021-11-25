@@ -41,8 +41,15 @@ class Graph:
         Dict_children = {}
         for i in range(len(self.levels)):
             for j in range(len(self.levels[i])):
-                Dict_children[self.levels[i][j]] = [self.levels[i][j].children[k].state.table for k in range(self.levels[i][j].children)]
+                Dict_children[self.levels[i][j]] = self.levels[i][j].children
         self.Dict_children = Dict_children
+
+        #Dict_children = {}
+        #for i in range(len(self.levels)):
+         #   for j in range(len(self.levels[i])):
+          #      node = self.levels[i][j]
+           #     Dict_children[str(node.state.table)] = [node.children[k].state.table for k in range(len(node.children))]
+        #self.Dict_children = Dict_children
 
         Dict_parents = {}
         for i in range(len(self.levels)):
