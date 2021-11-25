@@ -18,10 +18,7 @@ class Graph:
         self.levels = []                        # szintek elemeinek listáinak listája
         self.generate_graph()
         self.Dict_levels = None
-        self.Dict_children = None
 
-        #graf generalasa szintenkent gyerekek lista, keresztelek, fv: 2 tabla kozott 1 kul van-e, minden szulo-gyerek kapcs
-        #ha vmi nyero helyzet, akkor ures lista gyerekeknek, levelek ne lehessenek osok, esetleg szurt szinteket eltarolni
 
     def dict_into_file(self, dict):
         pass
@@ -32,13 +29,18 @@ class Graph:
         Csináljunk szótárat és majd azt akarom elmenteni.
         '''
         Dict_levels = {}
-        #Dict_children = {}
         for i in range(len(self.levels)):
             Dict_levels[i] = self.levels[i]
+        self.Dict_levels = Dict_levels
+
             #for j in range(len(self.levels[i])):
                 #Dict_children[self.levels[i][j]] = self.levels[i][j].children
-        return Dict_levels # Dict_children
+
         #Dict_children = {}
+
+
+        return Dict_levels  # Dict_children
+
         # todo: generate_edgesben rögtön beadni? (problémám, hogy hogy menjek végig az összes csúcon,
         #  a gyerekeinek listája benne van a node osztályban
 
@@ -51,15 +53,17 @@ class Graph:
         self.levels.append([self.root])
         leafless_new_level = self.generate_new_level([self.root])
         #while len(leafless_new_level) > 0:
-        for i in range(5):
+        for i in range(2):
             print(f"Generated new level, time elapsed from start: {time.perf_counter()-start}")
             leafless_new_level = self.generate_new_level(leafless_new_level)
             print(len(leafless_new_level))
-        Dict_levels = self.set_dicts()
-        mutat = [ Dict_levels[1][i].state.table for i in range(len(Dict_levels[1]))]
-        #mutat = [ Dict_children[1][i].state.table for i in range(len(Dict_children[1]))]
-        print(mutat)
         print(f"Finished generation, time elapsed from start: {time.perf_counter() - start}")
+
+        # dictionaryk
+        Dict_levels = self.set_dicts()
+        mutat = [Dict_levels[1][i].state.table for i in range(len(Dict_levels[1]))]
+        # mutat = [ Dict_children[1][i].state.table for i in range(len(Dict_children[1]))]
+        print(mutat)
 
     def generate_new_level(self, leafless_current_level: List[Node]):
         '''
