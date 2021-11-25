@@ -279,6 +279,25 @@ def strategia():
     # if hanyadik == 2 and celadas == 1:
         # erre is csak az es kesz
 
+# eredeti check tabla
+# 1-nek jó:
+    van_nulla = (van_sor(tabla) or van_oszlop(tabla))
+    if van_nulla:
+        win = True
+    else:
+        win = azonos_sor_oszlop(tabla)
+    # 2. nyer:
+    if -1 not in tabla and not win:
+        print("The player won.")
+        return False
+    # 1. nyert
+    elif win:
+        show.show(tabla, title="THE COMPUTER HAS WON")
+        return False
+    # meg nincs vege
+    else:
+        return True
+
 
 
 if __name__ == "__main__":

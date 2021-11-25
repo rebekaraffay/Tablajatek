@@ -8,6 +8,7 @@ másikuk a győztes."""
 import numpy as np
 import show
 
+
 def azonos_sor_oszlop(tabla):
     '''
         Eldönti, hogy van-e 2 egyforma teli oszlop vagy sor.
@@ -23,6 +24,7 @@ def azonos_sor_oszlop(tabla):
                     return True
     return False
 
+
 def van_oszlop(tabla):
     '''
         van csupa 0 oszlop.
@@ -30,11 +32,12 @@ def van_oszlop(tabla):
     for i in range(3):
         van = True
         for j in range(3):
-            if tabla[j,i] != 0:
+            if tabla[j, i] != 0:
                 van = False
         if van:
             return True
     return False
+
 
 def van_sor(tabla):
     '''
@@ -56,33 +59,34 @@ def check(tabla):
             1. nyert: Ha van csupa 0 vagy azonos sor / oszlop vagy
             2. nyert: Ha az előzőek nem teljesülnek és tele van az egész.
     """
-    # 1-nek jó:
-    van_nulla = (van_sor(tabla) or van_oszlop(tabla))
-    if van_nulla:
-        win = True
-    else:
-        win = azonos_sor_oszlop(tabla)
-    # 2. nyer:
-    if -1 not in tabla and not(win):
-        print("The player won.")
-        return False
-    # 1. nyert
-    elif win:
+    if van_sor(tabla) or van_oszlop(tabla) or azonos_sor_oszlop(tabla):
         show.show(tabla, title="THE COMPUTER HAS WON")
         return False
-    # meg nincs vege
-    else:
-        return True
+
+    elif -1 not in tabla:
+        show.show(tabla, title="YOU WON")
+        return False
+    return True
+
 
 # Hibaosztályok
+
 class Error(Exception):
     pass
+
+
 class SorOutOfRange(Error):
     pass
+
+
 class OszlopOutOfRange(Error):
     pass
+
+
 class ErtekOutOfRange(Error):
     pass
+
+
 class NotEmpty(Error):
     pass
 
@@ -92,7 +96,7 @@ def value_changer(value):
     if value == 'o':
         return 0
 
-def lepes(tabla):
+def lepes(tabla, i):
     '''
         A felhasználótól elkérjük, hogy hova szeretne rakni, majd annak az értékét.
         Ezután a gép "tükrözi" a lépését.
@@ -133,17 +137,20 @@ def lepes(tabla):
     print("Felhasznalo lepese: ")
     show.show(tabla)
 
-    #check(tabla)
-
     # gep lepese
     if check(tabla):
+        i = i + 1
+        print(i, ". round:")
         if oszlop_index == 1:
             tabla[2 - sor_index][oszlop_index] = ertek
         else:
             tabla[sor_index][2 - oszlop_index] = ertek
         print("Gep lepese: ")
         show.show(tabla)
-    return tabla
+        if check(tabla):
+            lepes(tabla,i)
+    else:
+        return None
 
 
 def jatek():
@@ -151,13 +158,10 @@ def jatek():
     print("Kezdo allapot: ")
     show.show(tabla)
     tabla[1, 1] = 0
+    print("1. round")
     print("Gep lepese: ")
     show.show(tabla)
-    i = 0
-    while check(tabla):
-        i = i+1
-        print(i , ". round:")
-        lepes(tabla)
+    lepes(tabla, 1)
 
 
 if __name__ == "__main__":

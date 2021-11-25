@@ -3,14 +3,24 @@ import numpy as np
 import Jatek
 
 # Hibaosztályok
+
+
 class Error(Exception):
     pass
+
+
 class SorOutOfRange(Error):
     pass
+
+
 class OszlopOutOfRange(Error):
     pass
+
+
 class ErtekOutOfRange(Error):
     pass
+
+
 class NotEmpty(Error):
     pass
 
@@ -20,31 +30,21 @@ def check(tabla, strat):
         True: még megy tovább a játék.
         False: vége van, valaki nyert.
     """
-    van_nulla = (Jatek.van_sor(tabla) or Jatek.van_oszlop(tabla))
-    if van_nulla:
-        win = True
-    else:
-        win = Jatek.azonos_sor_oszlop(tabla)
-    if -1 not in tabla and not(win):
-        if strat == 1:
-            show.show(tabla, title="A masodik jatekos nyert")
-            return False
-        else:
-            show.show(tabla, title="Az elso jatekos nyert")
-            return False
-    elif win:
+    if Jatek.van_sor(tabla) or Jatek.van_oszlop(tabla) or Jatek.azonos_sor_oszlop(tabla):
         if strat == 1:
             show.show(tabla, title="Az elso jatekos nyert")
             return False
         else:
             show.show(tabla, title="A masodik jatekos nyert")
             return False
-
-    # meg nincs vege
-    else:
-        return True
-
-
+    elif -1 not in tabla:
+        if strat == 1:
+            show.show(tabla, title="A masodik jatekos nyert")
+            return False
+        else:
+            show.show(tabla, title="Az elso jatekos nyert")
+            return False
+    return True
 
 
 def jatekos_lep(tabla, strat, i):
@@ -84,7 +84,7 @@ def jatekos_lep(tabla, strat, i):
     ertek = Jatek.value_changer(ertek)
     tabla[sor_index][oszlop_index] = ertek
 
-    if i%2==1:
+    if i % 2 == 1:
         print(i // 2 + 1, ". round")
         print("Elso jatekos lepese: ")
 
