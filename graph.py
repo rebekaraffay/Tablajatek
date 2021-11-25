@@ -24,6 +24,7 @@ class Graph:
         #ha vmi nyero helyzet, akkor ures lista gyerekeknek, levelek ne lehessenek osok, esetleg szurt szinteket eltarolni
 
     def dict_into_file(self, dict):
+        pass
         # todo
 
     def set_dicts(self):
