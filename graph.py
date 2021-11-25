@@ -23,6 +23,9 @@ class Graph:
         #graf generalasa szintenkent gyerekek lista, keresztelek, fv: 2 tabla kozott 1 kul van-e, minden szulo-gyerek kapcs
         #ha vmi nyero helyzet, akkor ures lista gyerekeknek, levelek ne lehessenek osok, esetleg szurt szinteket eltarolni
 
+    def dict_into_file(self, dict):
+        # todo
+
     def set_dicts(self):
         '''
         Csináljunk szótárat és majd azt akarom elmenteni.
@@ -47,7 +50,7 @@ class Graph:
         self.levels.append([self.root])
         leafless_new_level = self.generate_new_level([self.root])
         #while len(leafless_new_level) > 0:
-        for i in range(2):
+        for i in range(5):
             print(f"Generated new level, time elapsed from start: {time.perf_counter()-start}")
             leafless_new_level = self.generate_new_level(leafless_new_level)
             print(len(leafless_new_level))
@@ -104,7 +107,8 @@ class Graph:
         for child in new_level:
             parents = [parent for parent in last_level if State.is_relate(parent.state.table, child.state.table)]
             child.set_parents(parents)
-            #self.save_graph()
+            # todo: direktbe megírni, hogy mik ezek a csúcsok
+            # self.save_graph()
         for parent in last_level:
             children = [child for child in new_level if State.is_relate(parent.state.table, child.state.table)]
             parent.set_children(children)
