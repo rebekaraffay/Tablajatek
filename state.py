@@ -63,3 +63,4 @@ class State:
         '''
         Ha levél és nyerőállapot, vagy ha van olyan gyereke, amely nyerő állapot
         '''
+        # todo

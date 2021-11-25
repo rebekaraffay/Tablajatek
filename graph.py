@@ -25,7 +25,12 @@ class Graph:
         '''
         Csináljunk szótárat és majd azt akarom elmenteni.
         '''
-        Dict = {}
+        Dict_levels = {}
+        for i in range(lenself.levels):
+            Dict_levels[i] = self.levels[i]
+        Dict_children = {}
+        # todo: generate_edgesben rögtön beadni? (problémám, hogy hogy menjek végig az összes csúcon,
+        #  a gyerekeinek listája benne van a node osztályban
 
 
     def generate_graph(self):
@@ -89,6 +94,7 @@ class Graph:
         for child in new_level:
             parents = [parent for parent in last_level if State.is_relate(parent.state.table, child.state.table)]
             child.set_parents(parents)
+            self.save_graph()
         for parent in last_level:
             children = [child for child in new_level if State.is_relate(parent.state.table, child.state.table)]
             parent.set_children(children)
