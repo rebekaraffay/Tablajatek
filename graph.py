@@ -35,13 +35,13 @@ class Graph:
         '''
         Dict_levels = {}
         for i in range(len(self.levels)):
-            Dict_levels[i] = self.levels[i]
+            Dict_levels[i] = [self.levels[i][j].state.table for j in range(len(self.levels[i]))]
         self.Dict_levels = Dict_levels
 
         Dict_children = {}
         for i in range(len(self.levels)):
             for j in range(len(self.levels[i])):
-                Dict_children[self.levels[i][j]] = self.levels[i][j].children
+                Dict_children[self.levels[i][j]] = [self.levels[i][j].children[k].state.table for k in range(self.levels[i][j].children)]
         self.Dict_children = Dict_children
 
         Dict_parents = {}
@@ -69,9 +69,9 @@ class Graph:
         self.set_dicts()
         # Ellenőrzések
         print("A levél szótár első szintjének 2. eleme: ", self.Dict_levels[1][2])
-        level_dict_tables = [self.Dict_levels[1][i].state.table for i in range(len(self.Dict_levels[1]))]
+        #level_dict_tables = [self.Dict_levels[1][i].state.table for i in range(len(self.Dict_levels[1]))]
         children_dict_tables = [self.Dict_children[self.levels[1][2]][i].state.table for i in range(len(self.Dict_children[self.levels[1][2]]))]
-        print("A levelek szótár 1. szinjének első csúcsának táblája ", level_dict_tables[1])
+        #print("A levelek szótár 1. szinjének első csúcsának táblája ", level_dict_tables[1])
         print("A gyerekek szótárból az első szint 2. csúcsának gyerekei: ", self.Dict_children[self.levels[1][2]])
         print("A gyerekek szótárból az első szint 2. csúcsának gyerekeinek táblái: ", children_dict_tables)
         print("A gráf 1. szintjének 2. eleme ", self.levels[1][2])
