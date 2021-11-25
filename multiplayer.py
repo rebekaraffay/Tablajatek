@@ -53,6 +53,7 @@ def jatekos_lep(tabla, strat, i):
 
     # elso felhasznalo lepese
     # helyes lepest hajtott-e vegre
+
     while True:
         try:
             sor_index = int(input('A sor indexe {1,2,3}: ')) - 1
@@ -81,8 +82,9 @@ def jatekos_lep(tabla, strat, i):
             print("Az értéknek {0,1}-belinek kell lennie.")
 
     tabla[sor_index][oszlop_index] = ertek  # beirtuk a jatekos altal megadott erteket a megfelelo helyre
-    print(i, ". round")
+
     if i%2==1:
+        print(i // 2 + 1, ". round")
         print("Elso jatekos lepese: ")
 
         show.show(tabla)
@@ -105,8 +107,7 @@ def multiplayer():
     tabla = np.array([[-1, -1, -1], [-1, -1, -1], [-1, -1, -1]])
     print("Kezdo allapot: ")
     show.show(tabla)
-    i = 1
-    jatekos_lep(tabla, strat, i)
+    jatekos_lep(tabla, strat, 1)
 
 
 if __name__ == "__main__":
