@@ -62,7 +62,7 @@ class Graph:
         return dict_parents, dict_children
 
 
-    def dict_walks(self):
+    def dict_walks(self): #todo ellenorizni ezt, hogy miert NoneType not callable hibat ad, valoszinuleg az else nem jo, ahogy a korabbi ertekeket nezem
         dict_walks = {}
         for level in reversed(self.levels):
             for node in level:
