@@ -4,6 +4,7 @@ from node import Node
 from state import State
 from itertools import permutations
 from typing import List
+import win_state
 
 
 class Graph:
@@ -16,6 +17,7 @@ class Graph:
         self.list_levels = None
         self.dict_children = None
         self.dict_parents = None
+        self.dict_walks = None
         self.save_datas()
 
 
@@ -43,6 +45,9 @@ class Graph:
                 if node.parents is not None else []
         self.dict_parents = dict_parents
 
+
+
+
         # Ellenőrzések
         table = self.levels[1][2].state.table
         print("A gráf 1. szintjének 2. eleme ", self.levels[1][2])
@@ -53,7 +58,23 @@ class Graph:
         # dict_parents
         print("A szülők szótárból az első szint 2. elemének ősei (a gyökér) ", dict_parents[str(table)])
 
-        return dict_children, dict_parents
+
+        return dict_parents, dict_children
+
+
+    def dict_walks(self):
+        dict_walks = {}
+        for level in reversed(self.levels):
+            for node in level:
+                if node.state.who_won() == 0:
+                    dict_walks[str(node.state.table)] = [1, 0]
+
+                elif node.state.who_won() == 1:
+                    dict_walks[str(node.state.table)] = [0, 1]
+                else:
+                    dict_walks[str(node.state.table)] = [sum([int(dict_walks[str(child.state.table)][0]) for child in node.children]), sum([int(dict_walks[str(child.state.table)][1]) for child in node.children])]
+        self.dict_walks = dict_walks
+        return dict_walks
 
     def generate_graph(self):
         '''
@@ -63,7 +84,7 @@ class Graph:
         self.levels.append([self.root])
         leafless_new_level = self.generate_new_level([self.root])
         #while len(leafless_new_level) > 0:
-        for i in range(2):
+        for i in range(3):
             print(f"Generated new level, time elapsed from start: {time.perf_counter()-start}")
             leafless_new_level = self.generate_new_level(leafless_new_level)
             print(len(leafless_new_level))
@@ -130,5 +151,7 @@ class Graph:
 
 
 if __name__ == "__main__":
-    a = Graph()
+    #a = Graph()
     # print(a.root.children[0].state.table)
+
+

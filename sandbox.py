@@ -302,3 +302,19 @@ def strategia():
 
 if __name__ == "__main__":
     main()
+
+
+def dict_walks(self):
+    dict_walks = {}
+    for level in reversed(self.levels):
+        for node in level:
+            if node.state.who_win() == 0:
+                dict_walks[str(node.state.table)] = [1, 0]
+            elif node.state.who_win() == 1:
+                dict_walks[str(node.state.table)] = [0, 1]
+            else:
+                dict_walks[str(node.state.table)] = [
+                    sum([dict_walks[str(child.state.table)][0] for child in node.children]),
+                    sum([dict_walks[str(child.state.table)][1] for child in node.children])]
+    self.dict_walks = dict_walks
+    return dict_walks

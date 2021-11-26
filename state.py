@@ -54,6 +54,14 @@ class State:
             return WinState.OVER_WITHOUT
         return WinState.UNDECIDED
 
+    def who_won(self):
+        if self.equal_row_or_column() or self.full_zero_exist():
+            return 0
+        elif -1 not in self.table:
+            return 1
+        return 2
+
+
     @staticmethod
     def is_relate(parent: np.ndarray, child: np.ndarray) -> bool:
         difference = parent - child
