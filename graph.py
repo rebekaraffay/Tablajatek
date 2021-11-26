@@ -1,13 +1,9 @@
 import time
-
 import numpy as np
 from node import Node
 from state import State
-#import itertools as it
 from itertools import permutations
 from typing import List
-import random
-import json
 
 
 class Graph:
@@ -15,7 +11,7 @@ class Graph:
         empty_table = np.full((3, 3), -1, dtype=int)
         self.root = Node(State(empty_table))
         self.root.set_parents([])
-        self.levels = []                        # szintek elemeinek listáinak listája
+        self.levels = []
         self.generate_graph()
         self.list_levels = None
         self.dict_children = None
@@ -23,16 +19,13 @@ class Graph:
         self.save_datas()
 
 
-    def dict_into_file(self, dict):
-        pass
-        # todo
-
     def save_datas(self):
         '''
-        Csináljunk szótárat és majd azt akarom elmenteni.
-        A levelek szótárban a gráf szinjeinek csúcsait tárolom el.
-        Szintén a self. levels segítségével végigjárom az összes csúcsot és elmentem a gyerekeket
+        Csináljunk szótárakat, listát és majd azokat akarom elmenteni.
+        A levelek listában a gráf szinjeinek csúcsait tárolom el.
+        Szintén a self.levels segítségével végigjárom az összes csúcsot és elmentem a gyerekeket
         és szülőket 1-1 szótárba, ahol az adott csúcs a kulcs.
+        Mindennek a np.array tábláját mentem el, a szótárakban stringesítve vannak a kulcsok.
         '''
         self.list_levels = [[node.state.table for node in level] for level in self.levels]
 
@@ -57,7 +50,7 @@ class Graph:
         print("A levél lista első szintjének 2. eleme: ", self.list_levels[1][2])
         # dict_children
         print("A gyerekek tábláinak szótárából az első szint 2. csúcsának gyerekei: ", dict_children[str(table)])
-       # dict_parents
+        # dict_parents
         print("A szülők szótárból az első szint 2. elemének ősei (a gyökér) ", dict_parents[str(table)])
 
     def generate_graph(self):
