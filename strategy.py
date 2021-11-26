@@ -6,7 +6,6 @@ import graph
 import Fas_esetek
 import networkx as nx
 
-# todo: open dictionaris
 # csak pl, hogy legyen mivel dolgoznod
 d = {}  # üres szótár, ekvivalens: d = dict()
 d["apple"] = 12
