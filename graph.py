@@ -17,47 +17,48 @@ class Graph:
         self.root.set_parents([])
         self.levels = []                        # szintek elemeinek listáinak listája
         self.generate_graph()
-        self.Dict_levels = None
-        self.Dict_children = None
-        self.Dict_parents = None
+        self.list_levels = None
+        self.dict_children = None
+        self.dict_parents = None
+        self.save_datas()
 
 
     def dict_into_file(self, dict):
         pass
         # todo
 
-    def set_dicts(self):
+    def save_datas(self):
         '''
         Csináljunk szótárat és majd azt akarom elmenteni.
         A levelek szótárban a gráf szinjeinek csúcsait tárolom el.
         Szintén a self. levels segítségével végigjárom az összes csúcsot és elmentem a gyerekeket
         és szülőket 1-1 szótárba, ahol az adott csúcs a kulcs.
         '''
-        Dict_levels = {}
-        for i in range(len(self.levels)):
-            Dict_levels[i] = [self.levels[i][j].state.table for j in range(len(self.levels[i]))]
-        self.Dict_levels = Dict_levels
+        self.list_levels = [[node.state.table for node in level] for level in self.levels]
 
-        Dict_children = {}
-        for i in range(len(self.levels)):
-            for j in range(len(self.levels[i])):
-                Dict_children[self.levels[i][j]] = self.levels[i][j].children
-        self.Dict_children = Dict_children
+        dict_children = {}
+        for lev in self.levels:
+            for node in lev:
+                dict_children[str(node.state.table)] = [child.state.table for child in node.children] \
+                if node.children is not None else []
+        self.dict_children = dict_children
 
-        #Dict_children = {}
-        #for i in range(len(self.levels)):
-         #   for j in range(len(self.levels[i])):
-          #      node = self.levels[i][j]
-           #     Dict_children[str(node.state.table)] = [node.children[k].state.table for k in range(len(node.children))]
-        #self.Dict_children = Dict_children
+        dict_parents = {}
+        for lev in self.levels:
+            for node in lev:
+                dict_parents[str(node.state.table)] = [parent.state.table for parent in node.parents] \
+                if node.parents is not None else []
+        self.dict_parents = dict_parents
 
-        Dict_parents = {}
-        for i in range(len(self.levels)):
-            for j in range(len(self.levels[i])):
-                Dict_parents[self.levels[i][j]] = self.levels[i][j].parents
-        self.Dict_parents = Dict_parents
-
-
+        # Ellenőrzések
+        table = self.levels[1][2].state.table
+        print("A gráf 1. szintjének 2. eleme ", self.levels[1][2])
+        # list_levels
+        print("A levél lista első szintjének 2. eleme: ", self.list_levels[1][2])
+        # dict_children
+        print("A gyerekek tábláinak szótárából az első szint 2. csúcsának gyerekei: ", dict_children[str(table)])
+       # dict_parents
+        print("A szülők szótárból az első szint 2. elemének ősei (a gyökér) ", dict_parents[str(table)])
 
     def generate_graph(self):
         '''
@@ -73,16 +74,6 @@ class Graph:
             print(len(leafless_new_level))
         print(f"Finished generation, time elapsed from start: {time.perf_counter() - start}")
 
-        self.set_dicts()
-        # Ellenőrzések
-        print("A levél szótár első szintjének 2. eleme: ", self.Dict_levels[1][2])
-        #level_dict_tables = [self.Dict_levels[1][i].state.table for i in range(len(self.Dict_levels[1]))]
-        children_dict_tables = [self.Dict_children[self.levels[1][2]][i].state.table for i in range(len(self.Dict_children[self.levels[1][2]]))]
-        #print("A levelek szótár 1. szinjének első csúcsának táblája ", level_dict_tables[1])
-        print("A gyerekek szótárból az első szint 2. csúcsának gyerekei: ", self.Dict_children[self.levels[1][2]])
-        print("A gyerekek szótárból az első szint 2. csúcsának gyerekeinek táblái: ", children_dict_tables)
-        print("A gráf 1. szintjének 2. eleme ", self.levels[1][2])
-        print("A szülők szótárból az első szint 2. elemének ősei (a gyökér) ", self.Dict_parents[self.levels[1][2]])
 
     def generate_new_level(self, leafless_current_level: List[Node]):
         '''
