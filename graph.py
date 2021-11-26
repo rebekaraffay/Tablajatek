@@ -25,21 +25,21 @@ class Graph:
         A levelek listában a gráf szinjeinek csúcsait tárolom el.
         Szintén a self.levels segítségével végigjárom az összes csúcsot és elmentem a gyerekeket
         és szülőket 1-1 szótárba, ahol az adott csúcs a kulcs.
-        Mindennek a np.array tábláját mentem el, a szótárakban stringesítve vannak a kulcsok.
+        Mindennek a np.array tábláját mentem el, a szótárakban stringesitve vannak a kulcsok es az ertekek listeitve.
         '''
         self.list_levels = [[node.state.table for node in level] for level in self.levels]
 
         dict_children = {}
         for lev in self.levels:
             for node in lev:
-                dict_children[str(node.state.table)] = [child.state.table for child in node.children] \
+                dict_children[str(node.state.table)] = [child.state.table.tolist() for child in node.children] \
                 if node.children is not None else []
         self.dict_children = dict_children
 
         dict_parents = {}
         for lev in self.levels:
             for node in lev:
-                dict_parents[str(node.state.table)] = [parent.state.table for parent in node.parents] \
+                dict_parents[str(node.state.table)] = [parent.state.table.tolist() for parent in node.parents] \
                 if node.parents is not None else []
         self.dict_parents = dict_parents
 
@@ -52,6 +52,8 @@ class Graph:
         print("A gyerekek tábláinak szótárából az első szint 2. csúcsának gyerekei: ", dict_children[str(table)])
         # dict_parents
         print("A szülők szótárból az első szint 2. elemének ősei (a gyökér) ", dict_parents[str(table)])
+
+        return dict_children, dict_parents
 
     def generate_graph(self):
         '''
