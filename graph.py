@@ -4,7 +4,8 @@ from node import Node
 from state import State
 from itertools import permutations
 from typing import List
-import win_state
+import json
+
 
 
 class Graph:
@@ -19,6 +20,8 @@ class Graph:
         self.dict_parents = None
         self.dict_walks = None
         self.save_datas()
+        self.dict_walk()
+        self.choose_this_children()
 
 
     def save_datas(self):
@@ -62,7 +65,8 @@ class Graph:
         return dict_parents, dict_children
 
 
-    def dict_walks(self): #todo ellenorizni ezt, hogy miert NoneType not callable hibat ad, valoszinuleg az else nem jo, ahogy a korabbi ertekeket nezem
+    def dict_walk(self):
+        """Azon szotar letrehozasa, amely megmondja, hogy egy csucsbol hany ut vezet nyero illetve veszto csucsba"""
         dict_walks = {}
         for level in reversed(self.levels):
             for node in level:
@@ -72,9 +76,36 @@ class Graph:
                 elif node.state.who_won() == 1:
                     dict_walks[str(node.state.table)] = [0, 1]
                 else:
-                    dict_walks[str(node.state.table)] = [sum([int(dict_walks[str(child.state.table)][0]) for child in node.children]), sum([int(dict_walks[str(child.state.table)][1]) for child in node.children])]
+                    dict_walks[str(node.state.table)] = [sum([dict_walks[str(child.state.table)][0] for child in node.children])\
+                if node.children is not None else 0, sum([dict_walks[str(child.state.table)][1] for child in node.children])\
+                if node.children is not None else 0]
         self.dict_walks = dict_walks
         return dict_walks
+
+    def choose_this_children(self): #todo a filters resz biztos nem jo, hogyan kellene a maximalis alapjan kivalsztani? Es ugye lehet 0 is,szoval baj a 0-val osztas
+    #todo ha ez kesz van, akkor mar csak a lepest/jatekot kell megirni
+
+        with open("proba_seta_teljes.json", "r") as read_file:
+            aranyok = json.load(read_file)
+
+        with open("proba.json", "r") as read_file:
+            gyerek = json.load(read_file)
+
+        gyerek_szotar = gyerek[1]
+        for key in gyerek_szotar.keys():
+            if State(np.array(key)).who_won() == 1 or 0:
+                return None
+            else:
+                nyero_lepes = filter(lambda c: max(aranyok[c][0]/aranyok[c][1]), gyerek_szotar[key])
+                veszto_lepes = filter(lambda c: max(aranyok[c][1]/aranyok[c][0]), gyerek_szotar[key])
+                gyerek_szotar[key] = [nyero_lepes, veszto_lepes]
+
+        return gyerek_szotar
+
+
+
+
+
 
     def generate_graph(self):
         '''
@@ -83,8 +114,8 @@ class Graph:
         start = time.perf_counter()
         self.levels.append([self.root])
         leafless_new_level = self.generate_new_level([self.root])
-        #while len(leafless_new_level) > 0:
-        for i in range(3):
+        while len(leafless_new_level) > 0:
+        #for i in range(3):
             print(f"Generated new level, time elapsed from start: {time.perf_counter()-start}")
             leafless_new_level = self.generate_new_level(leafless_new_level)
             print(len(leafless_new_level))
@@ -150,8 +181,6 @@ class Graph:
 
 
 
-if __name__ == "__main__":
+#if __name__ == "__main__":
     #a = Graph()
     # print(a.root.children[0].state.table)
-
-
