@@ -90,17 +90,36 @@ class Graph:
 
         with open("proba.json", "r") as read_file:
             gyerek = json.load(read_file)
-
+        choose_dict = {}
         gyerek_szotar = gyerek[1]
         for key in gyerek_szotar.keys():
-            if State(np.array(key)).who_won() == 1 or 0:
-                return None
+            if len(gyerek_szotar[key]) == 0:
+                pass
             else:
-                nyero_lepes = filter(lambda c: max(aranyok[c][0]/aranyok[c][1]), gyerek_szotar[key])
-                veszto_lepes = filter(lambda c: max(aranyok[c][1]/aranyok[c][0]), gyerek_szotar[key])
-                gyerek_szotar[key] = [nyero_lepes, veszto_lepes]
+                lehetoseg = []
+                for i in range(len(gyerek_szotar[key])):
+                    if aranyok[gyerek_szotar[key][i]][1] == 0:
+                        lehetoseg.append(gyerek_szotar[key][i])
+                        choose_dict[key] = lehetoseg
+                        lehetoseg = []
 
-        return gyerek_szotar
+                    else:
+                        nyero = []
+                        veszto = []
+                        nyero_lepes = sorted(gyerek_szotar[key], key=lambda x: aranyok[x][0]/aranyok[x][1])
+                        for i in range(len(nyero_lepes)):
+                            if aranyok[nyero_lepes[0]][0]/aranyok[nyero_lepes[0]][1]  == aranyok[nyero_lepes[i]][0]/aranyok[nyero_lepes[i]][1]:
+                                nyero.append(nyero_lepes[i])
+                        veszto_lepes = sorted(gyerek_szotar[key], key=lambda x: aranyok[x][1]/aranyok[x][0])[0]
+                        for i in range(len(nyero_lepes)):
+                            if aranyok[veszto_lepes[0]][1]/aranyok[veszto_lepes[0]][0]  == aranyok[veszto_lepes[i]][1]/aranyok[veszto_lepes[i]][0]:
+                                veszto.append(nyero_lepes[i])
+
+                        choose_dict[key] = [nyero, veszto]
+
+
+
+        return choose_dict
 
 
 
