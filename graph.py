@@ -62,7 +62,6 @@ class Graph:
 
         return dict_parents, dict_children
 
-
     def dict_walk(self):
         """Azon szotar letrehozasa, amely megmondja, hogy egy csucsbol hany ut vezet nyero illetve veszto csucsba"""
         dict_walks = {}
@@ -74,12 +73,13 @@ class Graph:
                 elif node.state.who_won() == 1:
                     dict_walks[str(node.state.table)] = [0, 1]
                 else:
-                    dict_walks[str(node.state.table)] = [sum([dict_walks[str(child.state.table)][0] for child in node.children])\
-                if node.children is not None else 0, sum([dict_walks[str(child.state.table)][1] for child in node.children])\
+                    dict_walks[str(node.state.table)] = [sum([dict_walks[str(child.state.table)][0] \
+                                                              for child in node.children])\
+                if node.children is not None else 0, sum([dict_walks[str(child.state.table)][1] \
+                                                          for child in node.children])\
                 if node.children is not None else 0]
         self.dict_walks = dict_walks
         return dict_walks
-
 
     def generate_graph(self):
         '''
@@ -94,7 +94,6 @@ class Graph:
             leafless_new_level = self.generate_new_level(leafless_new_level)
             print(len(leafless_new_level))
         print(f"Finished generation, time elapsed from start: {time.perf_counter() - start}")
-
 
     def generate_new_level(self, leafless_current_level: List[Node]):
         '''
@@ -123,7 +122,7 @@ class Graph:
         print(f"select leaf nodes {ts6-ts5}")
         return leafless_new_level
 
-    def potential_new_level_tables(self):   # todo: rename potenciális, ezek még nem csúcsok
+    def potential_new_level_tables(self):
         '''
         Létrehozza a következő szint lehetséges ccsúcsainak tábláit.
         '''
@@ -136,18 +135,18 @@ class Graph:
 
         return np_tables
 
-    def generate_edges(self, new_level: List[Node], last_level: List[Node]):    # todo: last levelben csak a nem leafek legyenek
+    def generate_edges(self, new_level: List[Node], last_level: List[Node]):
         '''
         Létrehozza a 2 szint elemeinek children és parents listáját, amit a node classban kértünk.
         '''
         for child in new_level:
             parents = [parent for parent in last_level if State.is_relate(parent.state.table, child.state.table)]
             child.set_parents(parents)
-            # todo: direktbe megírni, hogy mik ezek a csúcsok
-            # self.save_graph()
         for parent in last_level:
             children = [child for child in new_level if State.is_relate(parent.state.table, child.state.table)]
             parent.set_children(children)
+
+
 
 
 

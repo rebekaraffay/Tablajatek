@@ -1,5 +1,7 @@
 import numpy as np
 from win_state import WinState
+import random
+import json
 
 
 class State:
@@ -9,8 +11,8 @@ class State:
 
     def __init__(self, table):
         self.table = table
-        self.end = None
-
+        self.end = None         # todo: ha nem használjuk sehol, akkor töröljük, \
+        # Dorka nem használta végül, nem tudja ki írta
 
 
     def equal_row_or_column(self):
@@ -61,14 +63,28 @@ class State:
             return 1
         return 2
 
-
     @staticmethod
     def is_relate(parent: np.ndarray, child: np.ndarray) -> bool:
         difference = parent - child
         return np.count_nonzero(difference) == 1
 
-    def is_winner(self):
+    def computer_step(self, strategy):
         '''
-        Ha levél és nyerőállapot, vagy ha van olyan gyereke, amely nyerő állapot
+        1-es stratégia, ha azonosra törekszik mit lépjen a gép.
+        2-es, ha teli táblára.
+        Kész szótárból szedi ki a lépéseket. (ELtároltuk, hogy egy adott csúcsból hova érdemes lépni
+        a különböző stratégiák esetén.
         '''
-        # todo
+        # todo: most node megy be és tábla jön ki, attól függ, hogy milyen lesz a nagy program, hogy mit szeretnénk
+        with open("nyero_lepesek.json", "r") as read_file:
+            strat_1 = json.load(read_file)
+
+        with open("veszto_lepesek.json", "r") as read_file:
+            strat_2 = json.load(read_file)
+
+        if strategy == 1:
+            index = random.randint(0, len(strat_1[self.table])-1)
+            return strat_1[self.table][index]
+        else:
+            index = random.randint (0, len(strat_2[self.table])-1)
+            return strat_2[self.table][index]
