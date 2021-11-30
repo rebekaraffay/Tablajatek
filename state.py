@@ -84,7 +84,15 @@ class State:
 
         if strategy == 1:
             index = random.randint(0, len(strat_1[self.table])-1)
-            return strat_1[self.table][index]
+            step = strat_1[str(self.table)][index]
         else:
             index = random.randint (0, len(strat_2[self.table])-1)
-            return strat_2[self.table][index]
+            step = strat_2[str(self.table)][index]
+
+        step = [step[i] for i in range(2,len(step)-2)]      # két szélső kihagyva []
+
+        rows = step.split('\n')
+
+
+        step = [np.reshape([j for j in step[i]], (3, 3)) for i in range(len(step))]
+        return step

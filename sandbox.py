@@ -1,5 +1,28 @@
 from Fas_esetek import nodes
 
+
+# np. array-jé alakításhoz
+temp = []
+        sor = 0
+        for i in range(len(step)):
+            start_0 = 0
+            while step[i] != "]":
+                i+=1
+            end_0 = i
+            while step[i] != "[":
+                i+=1
+            start_1 = i
+            while step[i] != "]":
+                i+=1
+            end_1 = i
+            while step[i] != "[":
+                i+=1
+            start_2 = i
+            while step[i] != "]":
+                i+=1
+            end_2 = i
+
+
 # gyorsítás próbálkozás, fentről felépíteni a fát
     def generate_graph_test(self):
         '''
