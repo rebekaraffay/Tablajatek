@@ -90,8 +90,18 @@ class State:
             step = strat_2[str(self.table)][index]
 
         step = [step[i] for i in range(2,len(step)-2)]      # két szélső kihagyva []
+        step = step.replace("]", "")                        # elhagyjuk a fölösleges elemeket
+        step = step.replace("[", "")
+        step = step.split("\n")
+        for i in range(len(step)):
+            step[i] = step[i].replace("  ", " ").split(" ")
+        del step[1][0]
+        del step[2][0]
+        for i in range(3):
+            for j in range(3):
+                step[i][j] = int(step[i][j])
 
-        rows = step.split('\n')
+        np.array(step)
 
 
         step = [np.reshape([j for j in step[i]], (3, 3)) for i in range(len(step))]
