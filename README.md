@@ -1,5 +1,5 @@
-# Tablajatek
-#### Jatekszabaly
+# Tablajáték
+#### Játékszabály
     3*3-as táblán játsza két személy, 
     kétféle (o vagy x) jel bármelyikét írhatják a mezőkbe (nincs saját jel).
     Egyikük (előre meg kell állapodni, hogy melyikük) nyer,
