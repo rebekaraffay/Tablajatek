@@ -145,10 +145,10 @@ def final_game():
     while True:
         try:
             hanyadik = int(input('Hanyadik jatekos szeretnél lenni {1,2}? '))
-            if hanyadik not in range(0,2):
+            if hanyadik not in range(1,3):
                 raise ErtekOutOfRange
             strat = int(input('Válassz strategiat! 1: telítés, 2: azonos '))
-            if strat not in range(0,2):
+            if strat not in range(1,3):
                 raise ErtekOutOfRange
             break
         except ErtekOutOfRange:

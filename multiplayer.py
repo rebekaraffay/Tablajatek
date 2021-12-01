@@ -107,7 +107,7 @@ def multiplayer():
     while True:
         try:
             strat = int(input('Elso jatekos valassz strategiat! 1: telites, 2: azonos: '))
-            if strat not in range(0,2):
+            if strat not in range(1,3):
                 raise ErtekOutOfRange
             break
         except ErtekOutOfRange:
