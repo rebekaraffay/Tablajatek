@@ -91,6 +91,7 @@ def jatekos_lep(tabla, strat, hanyadik, i):
         if hanyadik == 2:
             print(i, ".round")
             i = i+1
+            print("A gep lepese: ")
         tabla = computer_step(tabla, strat)
         if check(tabla, strat):
             jatekos_lep(tabla, strat, hanyadik, i)
@@ -148,6 +149,8 @@ def final_game():
     if hanyadik == 1:
         jatekos_lep(tabla, strat, hanyadik, 1)
     else:
+        print("1. round")
+        print("A gep lepese: ")
         tabla = computer_step(tabla, strat)
         jatekos_lep(tabla, strat, hanyadik, 2)
 
