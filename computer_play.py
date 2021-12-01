@@ -133,7 +133,7 @@ def convert_to_nparray(node: str):
 
     step = np.array(node)
     # show.show(node)
-    return node
+    return step
 
 def computer_step(tabla, strategy):
     '''
@@ -149,16 +149,21 @@ def computer_step(tabla, strategy):
     with open("veszto_lepesek.json", "r") as read_file:
         strat_2 = json.load(read_file)
 
+    with open("azonos_esetben_vesztok.json", "r") as read_file:
+        dict_loser_children = json.load(read_file)
+
     if strategy == 1:
         index = random.randint(0, len(strat_1[str(tabla)])-1)
         step = strat_1[str(tabla)][index]
         print("haha", step, type(step))
-    # todo: dict_loser_children-t beimportálni jsonból
+
+
     elif dict_loser_children[str(tabla)] is not None:      # ha 1 lépésre vagyunk vesztéstől
         child = dict_loser_children[str(tabla)][0]         # ha több van, akkor mindegy, csak egyet tudunk kivédeni
         convert_to_nparray(child)               # most már np.array
         i, j = get_different_index(child)
         step = opposite_step(child, tabla, i, j)   # ellenkező lépés végrehajtása, mint amivel instant veszítene
+
     else:
         index = random.randint(0, len(strat_2[str(tabla)])-1)
         step = strat_2[str(tabla)][index]
