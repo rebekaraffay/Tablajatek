@@ -19,6 +19,7 @@ class Graph:
         self.dict_children = None
         self.dict_parents = None
         self.dict_walks = None
+        self.dict_loser_children = None
         self.save_datas()
         self.dict_walk()
 
@@ -45,6 +46,15 @@ class Graph:
                 dict_parents[str(node.state.table)] = [str(parent.state.table) for parent in node.parents] \
                 if node.parents is not None else []
         self.dict_parents = dict_parents
+
+        dict_loser_children = {}
+        for lev in self.levels:
+            for node in lev:
+                if node.children is not None:
+                    dict_loser_children[str(node.state.table)] = [str(child.state.table) for child in node.children] \
+                     if child.State.who_won() == 0
+        self.dict_loser_children = dict_loser_children
+
 
 
 
