@@ -31,14 +31,14 @@ def check(tabla, strat):
         False: vége van, valaki nyert.
     """
     if Jatek.van_sor(tabla) or Jatek.van_oszlop(tabla) or Jatek.azonos_sor_oszlop(tabla):
-        if strat == 1:
+        if strat == 2:
             show.show(tabla, title="Az elso jatekos nyert")
             return False
         else:
             show.show(tabla, title="A masodik jatekos nyert")
             return False
     elif -1 not in tabla:
-        if strat == 1:
+        if strat == 2:
             show.show(tabla, title="A masodik jatekos nyert")
             return False
         else:
@@ -104,7 +104,15 @@ def jatekos_lep(tabla, strat, i):
 
 
 def multiplayer():
-    strat = int(input('Elso jatekos valassz strategiat! 1: azonos, 2: telites: '))
+    while True:
+        try:
+            strat = int(input('Elso jatekos valassz strategiat! 1: telites, 2: azonos: '))
+            if strat not in range(0,2):
+                raise ErtekOutOfRange
+            break
+        except ErtekOutOfRange:
+            print("Az értéknek 1-nek vagy 2-nek kell lennie.")
+
     tabla = np.array([[-1, -1, -1], [-1, -1, -1], [-1, -1, -1]])
     print("Kezdo allapot: ")
     show.show(tabla)

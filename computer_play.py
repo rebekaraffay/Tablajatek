@@ -141,8 +141,19 @@ def computer_step(tabla, strategy):
     return step
 
 def final_game():
-    hanyadik = int(input('Hanyadik jatekos szeretnél lenni {1,2}? '))
-    strat = int(input('Válassz strategiat! 1: telítés, 2: azonos '))
+
+    while True:
+        try:
+            hanyadik = int(input('Hanyadik jatekos szeretnél lenni {1,2}? '))
+            if hanyadik not in range(0,2):
+                raise ErtekOutOfRange
+            strat = int(input('Válassz strategiat! 1: telítés, 2: azonos '))
+            if strat not in range(0,2):
+                raise ErtekOutOfRange
+            break
+        except ErtekOutOfRange:
+            print("Az értéknek 1-nek vagy 2-nek kell lennie.")
+
     tabla = np.array([[-1, -1, -1], [-1, -1, -1], [-1, -1, -1]])
     print("Kezdo allapot: ")
     show.show(tabla)
