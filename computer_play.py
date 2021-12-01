@@ -42,7 +42,6 @@ class ErtekOutOfRange(Error):
 class NotEmpty(Error):
     pass
 
-
 def jatekos_lep(tabla, strat, hanyadik, i):
     '''
         A felhasználótól elkérjük, hogy hova szeretne rakni, majd annak az értékét.
@@ -97,6 +96,25 @@ def jatekos_lep(tabla, strat, hanyadik, i):
             jatekos_lep(tabla, strat, hanyadik, i)
     else:
         return None
+
+
+def get_different_index(parent: np.ndarray, child: np.ndarray):
+    difference = parent - child
+    for i in range(3):
+        for j in range(3):
+            if difference[i][j] != 0:
+                return i,j
+
+def opposite_step(child: np.ndarray, parent:np.array, i: int, j: int):
+    '''
+    A vesztes lépés ellentettjét akarom lépni.
+    '''
+    if child[i][j] == 0:
+        parent[i][j] = -1
+    else:
+        parent[i][j] = 0
+    return parent
+
 
 def computer_step(tabla, strategy):
     '''
