@@ -15,7 +15,7 @@ def special_amoba():
     while True:
         try:
             tipus = int(input("Egyedul vagy egy baratoddal szeretnel jatszani? Ha egyedul: 1, ha nem: 2: "))
-            if tipus not in range(0,2):
+            if tipus not in range(1,3):
                 raise ErtekOutOfRange
             break
         except ErtekOutOfRange:
