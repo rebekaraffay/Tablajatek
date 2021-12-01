@@ -1,4 +1,4 @@
-from Fas_esetek import nodes
+# rossz fuggvenyek
 
 # átalakíts majdnem jó:
 step = [step[i] for i in range(2,len(step)-2)]      # két szélső kihagyva []
