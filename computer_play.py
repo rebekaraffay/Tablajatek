@@ -179,29 +179,16 @@ def computer_step(tabla, strategy):
 
     else:
         index = random.randint(0, len(strat_2[str(tabla)])-1)
-        i = 0
-        while i != len(strat_2[str(tabla)]):
+        jo = []
+        for i in range(len(strat_2[str(tabla)])):
             if dict_loser_children[strat_2[str(tabla)][i]] == []:
-                step = strat_2[str(tabla)][i]
-                step = step.replace("[ ", "[")
-                step = step.replace("]", "")  # elhagyjuk a fölösleges elemeket
-                step = step.replace("[", "")
-                step = step.split("\n")
-                for i in range(len(step)):
-                    step[i] = step[i].replace("  ", " ").split(" ")
-                del step[1][0]
-                del step[2][0]
-                print("korte", step)
-                for i in range(3):
-                    for j in range(3):
-                        step[i][j] = int(step[i][j])
+                jo.append(strat_2[str(tabla)][i])
+        print(jo)
+        if len(jo) == 0:
 
-                step = np.array(step)
-                show.show(step)
-                return step
-            else:
-                i = i+1
-        step = strat_2[str(tabla)][index]
+            step = strat_2[str(tabla)][index]
+        else:
+            step = jo[0]
 
 
     step = step.replace("[ ", "[")
