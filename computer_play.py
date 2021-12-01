@@ -12,15 +12,15 @@ def check(tabla, strat):
     """
     if Jatek.van_sor(tabla) or Jatek.van_oszlop(tabla) or Jatek.azonos_sor_oszlop(tabla):
         if strat == 1:
-            show.show(tabla, "A gep nyert")
+            show.show(tabla, "A gép nyert")
         if strat == 2:
-            show.show(tabla, "On nyert")
+            show.show(tabla, "Gratulálunk, Ön nyert!")
         return False
     elif -1 not in tabla:
         if strat == 1:
-            show.show(tabla, "On nyert")
+            show.show(tabla, "Gratulálunk, Ön nyert!")
         if strat == 2:
-            show.show(tabla, "A gep nyert")
+            show.show(tabla, "A gép nyert")
         return False
     return True
 
@@ -115,12 +115,12 @@ def computer_step(tabla, strategy):
         strat_2 = json.load(read_file)
 
     if strategy == 1:
-        #index = random.randint(0, len(strat_1[tabla])-1)
-        step = strat_1[str(tabla)][0]
+        index = random.randint(0, len(strat_1[str(tabla)])-1)
+        step = strat_1[str(tabla)][index]
         print("haha", step, type(step))
     else:
-        #index = random.randint(0, len(strat_2[tabla])-1)
-        step = strat_2[str(tabla)][0]
+        index = random.randint(0, len(strat_2[str(tabla)])-1)
+        step = strat_2[str(tabla)][index]
         print("hihi", step, type(step))
 
     step = step.replace("[ ", "[")
