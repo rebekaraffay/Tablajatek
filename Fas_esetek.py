@@ -4,6 +4,7 @@ import numpy as np
 import Jatek
 import networkx as nx
 
+#ez egy felesleges file, kezdetleges otleteket tartalmaz, hogy hogyan alakitsunk ki egy grafot a jatekbol
 
 def nodes():
     """Megadja az osszes lehetseges tablaallast, most -1,1,0 ertekekkel es 3x3-as tablara"""

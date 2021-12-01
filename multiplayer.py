@@ -2,8 +2,9 @@ import show
 import numpy as np
 import Jatek
 
-# Hibaosztályok
+# ket jatekosra varians, egy gepnel ketten tudjak jatszani
 
+# Hibaosztályok:
 
 class Error(Exception):
     pass
@@ -30,7 +31,7 @@ def check(tabla, strat):
         True: még megy tovább a játék.
         False: vége van, valaki nyert.
     """
-    if Jatek.van_sor(tabla) or Jatek.van_oszlop(tabla) or Jatek.azonos_sor_oszlop(tabla):
+    if Jatek.van_sor(tabla) or Jatek.van_oszlop(tabla) or Jatek.azonos_sor_oszlop(tabla): #ha teljesulnek a nyeresi feltetelek
         if strat == 2:
             show.show(tabla, title="Az elso jatekos nyert")
             return False
@@ -44,6 +45,7 @@ def check(tabla, strat):
         else:
             show.show(tabla, title="Az elso jatekos nyert")
             return False
+    # ha nem teljesulnek a nyeresi feltetelek:
     return True
 
 
@@ -82,7 +84,7 @@ def jatekos_lep(tabla, strat, i):
             print("Az értéknek {o, x}nek kell lennie.")
 
     ertek = Jatek.value_changer(ertek)
-    tabla[sor_index][oszlop_index] = ertek
+    tabla[sor_index][oszlop_index] = ertek # a jatekos lep
 
     if i % 2 == 1:
         print(i // 2 + 1, ". round")
@@ -90,14 +92,14 @@ def jatekos_lep(tabla, strat, i):
 
         show.show(tabla)
 
-        if check(tabla, strat):
+        if check(tabla, strat):  # ha nem nyert, akkor lephet a kovetkezo
             jatekos_lep(tabla, strat, i+1)
     else:
         print("Masodik jatekos lepese: ")
 
         show.show(tabla)
 
-        if check(tabla, strat):
+        if check(tabla, strat):  # ha nem nyert, akkor lephet a kovetkezo
             jatekos_lep(tabla, strat, i+1)
 
     return tabla
@@ -106,17 +108,17 @@ def jatekos_lep(tabla, strat, i):
 def multiplayer():
     while True:
         try:
-            strat = int(input('Elso jatekos valassz strategiat! 1: telites, 2: azonos: '))
+            strat = int(input('Elso jatekos valassz strategiat! 1: telites, 2: azonos: ')) # helyes erteket adott-e meg
             if strat not in range(1,3):
                 raise ErtekOutOfRange
             break
         except ErtekOutOfRange:
             print("Az értéknek 1-nek vagy 2-nek kell lennie.")
 
-    tabla = np.array([[-1, -1, -1], [-1, -1, -1], [-1, -1, -1]])
-    print("Kezdo allapot: ")
+    tabla = np.array([[-1, -1, -1], [-1, -1, -1], [-1, -1, -1]]) # kezo allas
+    print("Kezdő állapot: ")
     show.show(tabla)
-    jatekos_lep(tabla, strat, 1)
+    jatekos_lep(tabla, strat, 1)  # jatekosok lepnek, amig valamelyikuk nem nyer
 
 
 if __name__ == "__main__":
