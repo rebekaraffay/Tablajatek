@@ -178,17 +178,10 @@ def computer_step(tabla, strategy):
         return step
 
     else:
-        index = random.randint(0, len(strat_2[str(tabla)])-1)
-        jo = []
-        for i in range(len(strat_2[str(tabla)])):
-            if dict_loser_children[strat_2[str(tabla)][i]] == []:
-                jo.append(strat_2[str(tabla)][i])
-        print(jo)
-        if len(jo) == 0:
-
-            step = strat_2[str(tabla)][index]
-        else:
-            step = jo[0]
+        index = random.randint(0, len(strat_2[str(tabla)])-1) #ha nem egy lepesre vagyunk a vesztestol, itt vannak problemak,\
+        # mert ha 2 lepesre vagyunk, akkor azt nem ismeri fel, a kezdeti strategiank miatt, itt lehetne javitani a programon
+        # ehhez uj veszto_lepeseket kellene definialni
+        step = strat_2[str(tabla)][index]
 
 
     step = step.replace("[ ", "[")

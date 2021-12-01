@@ -380,3 +380,17 @@ def play():
         print("gép lepese utan a tabla: ", tabla)
         print("Gép lépése: ")
         i += 1
+
+index = random.randint(0, len(strat_2[str(tabla)])-1)
+        jo = []
+        for i in range(len(strat_2[str(tabla)])):
+            print(dict_loser_children[strat_2[str(tabla)][i]])
+            if dict_loser_children[strat_2[str(tabla)][i]] == []:
+
+                jo.append(strat_2[str(tabla)][i])
+        print(jo)
+        if len(jo) == 0:
+
+            step = strat_2[str(tabla)][index]
+        else:
+            step = jo[0]
