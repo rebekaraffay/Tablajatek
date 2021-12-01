@@ -110,11 +110,30 @@ def opposite_step(child: np.ndarray, parent:np.array, i: int, j: int):
     A vesztes lépés ellentettjét akarom lépni.
     '''
     if child[i][j] == 0:
-        parent[i][j] = -1
+        parent[i][j] = 1
     else:
         parent[i][j] = 0
     return parent
 
+def convert_to_nparray(node: str):
+    # todo: ellenőrizni, hogy jó-e, átmásoltam a másik konvertálásából, nem biztos, hogy ugyanolyanok
+    node = node.replace("[ ", "[")
+    # print("alma", node)
+    node = node.replace("]", "")  # elhagyjuk a fölösleges elemeket
+    node = node.replace("[", "")
+    node = node.split("\n")
+    for i in range(len(node)):
+        node[i] = node[i].replace("  ", " ").split(" ")
+    del node[1][0]
+    del node[2][0]
+    # print("korte", node)
+    for i in range(3):
+        for j in range(3):
+            node[i][j] = int(node[i][j])
+
+    step = np.array(node)
+    # show.show(node)
+    return node
 
 def computer_step(tabla, strategy):
     '''
@@ -134,6 +153,12 @@ def computer_step(tabla, strategy):
         index = random.randint(0, len(strat_1[str(tabla)])-1)
         step = strat_1[str(tabla)][index]
         print("haha", step, type(step))
+    # todo: dict_loser_children-t beimportálni jsonból
+    elif dict_loser_children[str(tabla)] is not None:      # ha 1 lépésre vagyunk vesztéstől
+        child = dict_loser_children[str(tabla)][0]         # ha több van, akkor mindegy, csak egyet tudunk kivédeni
+        convert_to_nparray(child)               # most már np.array
+        i, j = get_different_index(child)
+        step = opposite_step(child, tabla, i, j)   # ellenkező lépés végrehajtása, mint amivel instant veszítene
     else:
         index = random.randint(0, len(strat_2[str(tabla)])-1)
         step = strat_2[str(tabla)][index]
