@@ -1,8 +1,9 @@
-# todo: játékszabélyok leírása világosan az elején
-# todo: readme-be dokumentáció valami minimális szinten
 
 import computer_play as cp
 import multiplayer as mp
+
+# a Jatek
+#Hibaosztalyok:
 
 class Error(Exception):
     pass
@@ -11,10 +12,10 @@ class ErtekOutOfRange(Error):
 
 
 def special_amoba():
-
+    """A kesz jatek"""
     while True:
         try:
-            tipus = int(input("Egyedul vagy egy baratoddal szeretnel jatszani? Ha egyedul: 1, ha nem: 2: "))
+            tipus = int(input("Egyedül vagy egy barátoddal szeretnél játszani? Ha egyedül: 1, ha nem: 2: ")) #kivalasztja a jatekos, hogy melyik tipusu jatek fusson le
             if tipus not in range(1,3):
                 raise ErtekOutOfRange
             break

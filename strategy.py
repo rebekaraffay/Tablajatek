@@ -15,3 +15,8 @@ import graph
     #b = graph.Graph().dict_walk()
     #with open("proba_seta_teljes.json", "w") as write_file:
         #json.dump(b, write_file)
+
+if __name__ == "__main__":
+    c = graph.Graph().save_datas()
+    with open("azonos_esetben_vesztok.json", "w") as write_file:
+        json.dump(c, write_file)

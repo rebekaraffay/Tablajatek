@@ -1,10 +1,10 @@
-# Tablajáték
+# Táblajáték
 #### Játékszabály
     3*3-as táblán játsza két személy, 
-    kétféle (o vagy x) jel bármelyikét írhatják a mezőkbe (nincs saját jel).
+    kétféle (o vagy x) jel bármelyikét írhatják a mezőkbe, nincs saját jel.
     Egyikük (előre meg kell állapodni, hogy melyikük) nyer,
-    ha van két  egyforma (teli) sor vagy oszlop,
-    vagy ha 3 darab 0 került egy vonalba. 
+    ha van két egyforma (teli) sor vagy oszlop,
+    vagy ha 3 darab o került egy vonalba. 
     Ha kilenc jel elhelyezése után egyik fenti feltétel sem  teljesül,
     másikuk a győztes.
 
@@ -37,6 +37,11 @@
     értékek: szülők vagy gyerekek, list formában
     (2 szótár van egybe, az első a szülőket tartalmazza,
     a második a gyerekeket)
+    azonos_esetben_vesztok.json: az állásokhoz megnézi, hogy van-e vesztő
+    gyerekük, egy csúcs ebben az esetben akkor vesztő, ha azonos/o 
+    oszlop/sor van benne
+    kulcsok: állások
+    értékek: vesztő gyerekek
 ###### Python fileok
     main_game.py: Maga a játék, ezt kell lefuttatni.
     Jatek.py: A játék azon verziója, ha a gép kezd és azonosakra törekszik

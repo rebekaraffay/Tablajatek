@@ -52,7 +52,7 @@ class Graph:
             for node in lev:
                 if node.children is not None:
                     dict_loser_children[str(node.state.table)] = [str(child.state.table) for child in node.children \
-                                                                  if child.State.who_won() == 0] 
+                                                                  if child.state.who_won() == 0]
         self.dict_loser_children = dict_loser_children
 
 
@@ -70,7 +70,7 @@ class Graph:
         print("A szülők szótárból az első szint 2. elemének ősei (a gyökér) ", dict_parents[str(table)])
 
 
-        return dict_parents, dict_children
+        return dict_loser_children
 
     def dict_walk(self):
         """Azon szotar letrehozasa, amely megmondja, hogy egy csucsbol hany ut vezet nyero illetve veszto csucsba"""
