@@ -132,6 +132,7 @@ def computer_step(tabla, strategy):
         step[i] = step[i].replace("  ", " ").split(" ")
     del step[1][0]
     del step[2][0]
+    print("korte", step)
     for i in range(3):
         for j in range(3):
             step[i][j] = int(step[i][j])

@@ -1,10 +1,3 @@
-"""3*3-as táblán játsza két személy, kétféle (0 vagy 1) jel bár-
-melyikét írhatják a mezőkbe (nincs saját jel). Egyikük (előre
-meg kell állapodni, hogy melyikük) nyer, ha van két  egyforma (teli)
-sor vagy oszlop, vagy ha 3 darab 0 került egy vonalba. Ha kilenc
-jel elhelyezése után egyik fenti feltétel sem  teljesül,
-másikuk a győztes."""
-
 import numpy as np
 import show
 
