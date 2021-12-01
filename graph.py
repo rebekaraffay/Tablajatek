@@ -52,11 +52,8 @@ class Graph:
             for node in lev:
                 if node.children is not None:
                     dict_loser_children[str(node.state.table)] = [str(child.state.table) for child in node.children \
-<<<<<<< HEAD
                                                                   if child.state.who_won() == 0]
-=======
-                                                                  if child.State.who_won() == 0]
->>>>>>> 4466461b1ad2a2d6f497b9826a49942b864545a7
+
         self.dict_loser_children = dict_loser_children
 
 
