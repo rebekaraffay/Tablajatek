@@ -98,8 +98,6 @@ def jatekos_lep(tabla, strat, hanyadik, i):
     else:
         return None
 
-
-
 def computer_step(tabla, strategy):
     '''
     1-es stratégia, ha azonosra törekszik mit lépjen a gép.
