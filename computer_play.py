@@ -45,11 +45,10 @@ class NotEmpty(Error):
 def jatekos_lep(tabla, strat, hanyadik, i):
     '''
         A felhasználótól elkérjük, hogy hova szeretne rakni, majd annak az értékét.
+        Ellenőrizzük közben, hogy helyes válaszokat írt-e be.
         Ezután a gép "tükrözi" a lépését.
     '''
-    # felhasznalo lepese
-    # helyes lepest hajtott-e vegre
-
+    # Hova szeretne lépni a felhasználó
     while True:
         try:
             sor_index = int(input('A sor indexe {1,2,3}: ')) - 1
@@ -67,7 +66,7 @@ def jatekos_lep(tabla, strat, hanyadik, i):
             print("Az oszlop indexének {1,2,3}-belinek kell lennie, próbálja újra.")
         except NotEmpty:
             print("Csak üres mezőbe írhat, próbálja újra.")
-
+    # Mit szeretne lépni a felhasználó
     while True:
         try:
             ertek = str(input('Az ertek {x,o}: '))
@@ -76,16 +75,16 @@ def jatekos_lep(tabla, strat, hanyadik, i):
             break
         except ErtekOutOfRange:
             print("Az értéknek {o, x}nek kell lennie.")
-
-    ertek =Jatek.value_changer(ertek)
-
+    # {0,1}-nek kezeli az algoritmus, de {o,x}-et mutat mindig a tábla (0=o, 1 = x).
+    ertek = Jatek.value_changer(ertek)
+    # megváltoztatjuk a táblát a felhasználó lépésére, megmutatjuk az állást
     tabla[sor_index][oszlop_index] =ertek
     if hanyadik == 1:
         print(i, ". round:")
         i = i+1
     print("Felhasznalo lepese: ")
     show.show(tabla)
-
+    # ellenőrizzük, hogy vége van-e a játéknak
     if check(tabla,strat):
         if hanyadik == 2:
             print(i, ".round")
@@ -99,6 +98,9 @@ def jatekos_lep(tabla, strat, hanyadik, i):
 
 
 def get_different_index(parent: np.ndarray, child: np.ndarray):
+    '''
+        Megadja, hogy melyik mezőre léptek a gyerekben.
+    '''
     difference = parent - child
     for i in range(3):
         for j in range(3):
@@ -107,7 +109,8 @@ def get_different_index(parent: np.ndarray, child: np.ndarray):
 
 def opposite_step(child: np.ndarray, parent:np.array, i: int, j: int):
     '''
-    A vesztes lépés ellentettjét akarom lépni.
+        Ha egy szülőnek van vesztes gyereke, akkor azt elkerülvén a gyerekbe lépés ellentettjét hajtuk végre.
+        Már elkértük az új lépés mezőjének indexeit a get_different_index() fv-nyel.
     '''
     if child[i][j] == 0:
         parent[i][j] = 1
@@ -116,6 +119,13 @@ def opposite_step(child: np.ndarray, parent:np.array, i: int, j: int):
     return parent
 
 def convert_to_nparray(node: str):
+    '''
+        A jsonban csak stringként tudjuk tárolni az adatokat, viszont nekünk np.array kell és elég problémás az
+        átalakítása.
+        Ezt biztosan lehetett volna okosabban, kevésbé rizikósan megoldani, nekünk nem sikerült.
+        Eltávolítunk minden fölösleges karaktert és megpróbáljuk jól splitelni, hogy minden
+        a megfelelő helyre kerüljön.
+    '''
     # todo: ellenőrizni, hogy jó-e, átmásoltam a másik konvertálásából, nem biztos, hogy ugyanolyanok
     node = node.replace("[ ", "[")
     # print("alma", node)
@@ -137,12 +147,17 @@ def convert_to_nparray(node: str):
 
 def computer_step(tabla, strategy):
     '''
-    1-es stratégia, ha azonosra törekszik mit lépjen a gép.
-    2-es, ha teli táblára.
-    Kész szótárból szedi ki a lépéseket. (ELtároltuk, hogy egy adott csúcsból hova érdemes lépni
-    a különböző stratégiák esetén.
+        1-es stratégia, ha azonosra törekszik mit lépjen a gép.
+        2-es, ha teli táblára.
+        Kész szótárból szedi ki a lépéseket. (ELtároltuk, hogy egy adott csúcsból hova érdemes lépni
+        a különböző stratégiák esetén.
+        A 2-esnél nagyon rosszul működik a nyertes / vesztes gyerekek számának arányán alapuló stratégia,
+        ezért kicsit rásegítettünk. Nem ismerte fel azokat a helyzeteket, amikor már csak 1 lépés hiányzott a
+        biztos veszteséghez, ezért azoknál külön meghatározzuk a lépéseit. Ha egy csúcsnak van vesztes gyereke,
+        azokat eltároltuk egy újabb szótárban. Ha több van, akkor is csak egyet tudunk megúszni, ezért az elsőt
+        elrontjuk úgy, hogy pont az ellenkezőjét lépjük.
     '''
-
+    # szótárak beolvasása jsonból
     with open("nyero_lepesek.json", "r") as read_file:
         strat_1 = json.load(read_file)
 
