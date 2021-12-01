@@ -3,7 +3,7 @@ import json
 def choose_this_children_veszto():
     """Ha az a strategia, hogy telitesre torekszik a gep, megmondja, hogy hova lepjen egy adott csucsbol, dictionary formaban""" # Jsonbe szeretnenk majd elmenteni, hogy egy csucsbol hova erdemes lepni
 
-    with open("proba_seta_teljes.json", "r") as read_file:
+    with open("proba_seta_teljes.json", "r") as read_file: # jsonok megnyitasa
         aranyok = json.load(read_file)
 
     with open("teljes_szulo_gyerek_szotarak.json", "r") as read_file:

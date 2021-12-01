@@ -1,6 +1,8 @@
 import numpy as np
 import show
 
+# Ez annak a variansa, hogy a gep kezd es azonosra torekszik
+# Itt mindig a gep nyer
 
 def azonos_sor_oszlop(tabla):
     '''
@@ -20,7 +22,7 @@ def azonos_sor_oszlop(tabla):
 
 def van_oszlop(tabla):
     '''
-        van csupa 0 oszlop.
+        Eldonti, hogy van-e csupa 0 oszlop.
     '''
     for i in range(3):
         van = True
@@ -34,7 +36,7 @@ def van_oszlop(tabla):
 
 def van_sor(tabla):
     '''
-        Van csupa 0 sor.
+        Eldonti, hogy van-e csupa 0 sor.
     '''
     for i in range(3):
         van = True
@@ -53,11 +55,11 @@ def check(tabla):
             2. nyert: Ha az előzőek nem teljesülnek és tele van az egész.
     """
     if van_sor(tabla) or van_oszlop(tabla) or azonos_sor_oszlop(tabla):
-        show.show(tabla, title="THE COMPUTER HAS WON")
+        show.show(tabla, title="A gép nyert")
         return False
 
     elif -1 not in tabla:
-        show.show(tabla, title="YOU WON")
+        show.show(tabla, title="Gratulálunk, Ön nyert!")
         return False
     return True
 
@@ -84,6 +86,7 @@ class NotEmpty(Error):
     pass
 
 def value_changer(value):
+    """Atirjuk a beadott x/o-t 1/0-ra, hogy tudjunk vele dolgozni"""
     if value == 'x':
         return 1
     if value == 'o':
@@ -125,34 +128,34 @@ def lepes(tabla, i):
 
     ertek = value_changer(ertek)
 
-    tabla[sor_index][oszlop_index] = ertek
+    tabla[sor_index][oszlop_index] = ertek # itt lep a felhasznalo
 
-    print("Felhasznalo lepese: ")
-    show.show(tabla)
+    print("A játékos lépése: ")
+    show.show(tabla) # kiiratjuk a lepest
 
     # gep lepese
     if check(tabla):
         i = i + 1
         print(i, ". round:")
         if oszlop_index == 1:
-            tabla[2 - sor_index][oszlop_index] = ertek
+            tabla[2 - sor_index][oszlop_index] = ertek  # tukrozzuk a jatekos lepeset
         else:
             tabla[sor_index][2 - oszlop_index] = ertek
-        print("Gep lepese: ")
+        print("A gép lépése: ")
         show.show(tabla)
-        if check(tabla):
+        if check(tabla): #megnezzuk, hogy nyert-e, ha nem, akkor ujra a jatekos jon
             lepes(tabla,i)
     else:
         return None
 
 
 def jatek():
-    tabla = np.array([[-1, -1, -1], [-1, -1, -1], [-1, -1, -1]])
-    print("Kezdo allapot: ")
+    tabla = np.array([[-1, -1, -1], [-1, -1, -1], [-1, -1, -1]]) #kezdo allas
+    print("Kezdő állapot: ")
     show.show(tabla)
-    tabla[1, 1] = 0
+    tabla[1, 1] = 0 # a gep elso lepeset konkretan megadjuk
     print("1. round")
-    print("Gep lepese: ")
+    print("A gép lépése: ")
     show.show(tabla)
     lepes(tabla, 1)
 
