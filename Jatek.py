@@ -32,7 +32,7 @@ def van_oszlop(tabla):
     for i in range(3):
         van = True
         for j in range(3):
-            if tabla[j, i] != 0:
+            if tabla[j][i] != 0:
                 van = False
         if van:
             return True
@@ -46,7 +46,7 @@ def van_sor(tabla):
     for i in range(3):
         van = True
         for j in range(3):
-            if tabla[i,j] != 0:
+            if tabla[i][j] != 0:
                 van = False
         if van:
             return True

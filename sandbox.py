@@ -361,3 +361,22 @@ def dict_walks(self):
                     sum([dict_walks[str(child.state.table)][1] for child in node.children])]
     self.dict_walks = dict_walks
     return dict_walks
+
+#Dorka jateka
+def play():
+    hanyadik = int(input('Hanyadik jatekos szeretnél lenni {1,2}? '))
+    strat = int(input('Válassz strategiat! 1: telítés, 2: azonos '))        # így lesz a gépnek beadott stratégia jó
+    tabla = np.array([[-1, -1, -1], [-1, -1, -1], [-1, -1, -1]])
+    print("Kezdo allapot: ")
+    show.show(tabla)
+    i = 1
+    if hanyadik == 1:
+        print(i, ". round:")
+        jatekos_lep(tabla)
+        print(type(tabla))
+        print("jatekos lepese utan a tabla: ", tabla)
+        computer_step(tabla, strat)
+        tabla = computer_step(tabla, strat)
+        print("gép lepese utan a tabla: ", tabla)
+        print("Gép lépése: ")
+        i += 1

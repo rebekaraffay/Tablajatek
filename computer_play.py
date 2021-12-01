@@ -4,8 +4,25 @@ import Jatek
 import random
 import json
 
-def check():
-    pass        # todo
+
+def check(tabla, strat):
+    """
+        True: még megy tovább a játék.
+        False: vége van, valaki nyert.
+    """
+    if Jatek.van_sor(tabla) or Jatek.van_oszlop(tabla) or Jatek.azonos_sor_oszlop(tabla):
+        if strat == 1:
+            show.show(tabla, "A gep nyert")
+        if strat == 2:
+            show.show(tabla, "On nyert")
+        return False
+    elif -1 not in tabla:
+        if strat == 1:
+            show.show(tabla, "On nyert")
+        if strat == 2:
+            show.show(tabla, "A gep nyert")
+        return False
+    return True
 
 
 # Hibaosztályok
@@ -26,13 +43,14 @@ class NotEmpty(Error):
     pass
 
 
-def jatekos_lep(tabla):
+def jatekos_lep(tabla, strat, hanyadik, i):
     '''
         A felhasználótól elkérjük, hogy hova szeretne rakni, majd annak az értékét.
         Ezután a gép "tükrözi" a lépését.
     '''
     # felhasznalo lepese
     # helyes lepest hajtott-e vegre
+
     while True:
         try:
             sor_index = int(input('A sor indexe {1,2,3}: ')) - 1
@@ -60,14 +78,25 @@ def jatekos_lep(tabla):
         except ErtekOutOfRange:
             print("Az értéknek {o, x}nek kell lennie.")
 
-    ertek = Jatek.value_changer(ertek)
+    ertek =Jatek.value_changer(ertek)
 
-    tabla[sor_index][oszlop_index] = ertek
-
+    tabla[sor_index][oszlop_index] =ertek
+    if hanyadik == 1:
+        print(i, ". round:")
+        i = i+1
     print("Felhasznalo lepese: ")
     show.show(tabla)
 
-    # todo: check
+    if check(tabla,strat):
+        if hanyadik == 2:
+            print(i, ".round")
+            i = i+1
+        tabla = computer_step(tabla, strat)
+        if check(tabla, strat):
+            jatekos_lep(tabla, strat, hanyadik, i)
+    else:
+        return None
+
 
 
 def computer_step(tabla, strategy):
@@ -89,7 +118,7 @@ def computer_step(tabla, strategy):
         step = strat_1[str(tabla)][0]
         print("haha", step, type(step))
     else:
-        #index = random.randint (0, len(strat_2[tabla])-1)
+        #index = random.randint(0, len(strat_2[tabla])-1)
         step = strat_2[str(tabla)][0]
         print("hihi", step, type(step))
 
@@ -106,34 +135,21 @@ def computer_step(tabla, strategy):
         for j in range(3):
             step[i][j] = int(step[i][j])
 
-    np.array(step)
-    print(step[0])
-    step = [np.reshape([j for j in step[i]], (3, 3)) for i in range(len(step))]
-
+    step = np.array(step)
     show.show(step)
-    tabla = step
-    return tabla
+    return step
 
-
-def play():
+def final_game():
     hanyadik = int(input('Hanyadik jatekos szeretnél lenni {1,2}? '))
-    strat = int(input('Válassz strategiat! 1: telítés, 2: azonos '))        # így lesz a gépnek beadott stratégia jó
+    strat = int(input('Válassz strategiat! 1: telítés, 2: azonos '))
     tabla = np.array([[-1, -1, -1], [-1, -1, -1], [-1, -1, -1]])
     print("Kezdo allapot: ")
     show.show(tabla)
-    i = 1
     if hanyadik == 1:
-        print(i, ". round:")
-        jatekos_lep(tabla)
-        print(type(tabla))
-        print("jatekos lepese utan a tabla: ", tabla)
-        computer_step(tabla, strat)
+        jatekos_lep(tabla, strat, hanyadik, 1)
+    else:
         tabla = computer_step(tabla, strat)
-        print("gép lepese utan a tabla: ", tabla)
-        print("Gép lépése: ")
-        i += 1
-
-
+        jatekos_lep(tabla, strat, hanyadik, 2)
 
 if __name__ == "__main__":
-    play()
+    final_game()
