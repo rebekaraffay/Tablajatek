@@ -118,7 +118,7 @@ def opposite_step(child: np.ndarray, parent:np.array, i: int, j: int):
         parent[i][j] = 0
     return parent
 
-def convert_to_nparray(node: str):
+def convert_to_nparray(child: str):
     '''
         A jsonban csak stringként tudjuk tárolni az adatokat, viszont nekünk np.array kell és elég problémás az
         átalakítása.
@@ -127,22 +127,22 @@ def convert_to_nparray(node: str):
         a megfelelő helyre kerüljön.
     '''
     # todo: ellenőrizni, hogy jó-e, átmásoltam a másik konvertálásából, nem biztos, hogy ugyanolyanok
-    node = node.replace("[ ", "[")
+    child = child.replace("[ ", "[")
     # print("alma", node)
-    node = node.replace("]", "")  # elhagyjuk a fölösleges elemeket
-    node = node.replace("[", "")
-    node = node.split("\n")
-    for i in range(len(node)):
-        node[i] = node[i].replace("  ", " ").split(" ")
-    del node[1][0]
-    del node[2][0]
+    child = child.replace("]", "")  # elhagyjuk a fölösleges elemeket
+    child = child.replace("[", "")
+    child = child.split("\n")
+    for i in range(len(child)):
+        child[i] = child[i].replace("  ", " ").split(" ")
+    del child[1][0]
+    del child[2][0]
     # print("korte", node)
     for i in range(3):
         for j in range(3):
-            node[i][j] = int(node[i][j])
+            child[i][j] = int(child[i][j])
 
-    step = np.array(node)
-    # show.show(node)
+    step = np.array(child)
+    # show.show(child)
     return step
 
 def computer_step(tabla, strategy):
@@ -173,11 +173,14 @@ def computer_step(tabla, strategy):
         print("haha", step, type(step))
 
 
-    elif dict_loser_children[str(tabla)] is not None:      # ha 1 lépésre vagyunk vesztéstől
+    elif dict_loser_children[str(tabla)] != []: # ha 1 lépésre vagyunk vesztéstől
+        print(dict_loser_children[str(tabla)])
         child = dict_loser_children[str(tabla)][0]         # ha több van, akkor mindegy, csak egyet tudunk kivédeni
-        convert_to_nparray(child)               # most már np.array
-        i, j = get_different_index(child)
-        step = opposite_step(child, tabla, i, j)   # ellenkező lépés végrehajtása, mint amivel instant veszítene
+        child = convert_to_nparray(child)               # most már np.array
+        i, j = get_different_index(tabla, child)
+        step = opposite_step(child, tabla, i, j) # ellenkező lépés végrehajtása, mint amivel instant veszítene
+        show.show(step)
+        return step
 
     else:
         index = random.randint(0, len(strat_2[str(tabla)])-1)
