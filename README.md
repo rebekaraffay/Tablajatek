@@ -31,5 +31,25 @@
     melyik gyerekeineknek a legjobb a nyerő és vesztő utak aránya
     kulcsok: állások
     értékek: legjobb lépések, abban az esetben, ha telítésre törekszünk
+    proba.json: egy táblaálláshoz megmondja, hogy 
+    oda honnan lehet eljutni és hova lehet lépni (1 hosszúak a lépések)
+    kulcsok: állások
+    értékek: szülők vagy gyerekek, list formában
+    (2 szótár van egybe, az első a szülőket tartalmazza,
+    a második a gyerekeket)
 ###### Python fileok
     main_game.py: Maga a játék, ezt kell lefuttatni.
+    Jatek.py: A játék azon verziója, ha a gép kezd és azonosakra törekszik
+    computer_play.py: A játék azon verziója, ha a géppel játszik valaki
+    multiplayer.py: A játék azon verziója, ha ketten szertnék játszani
+    choose_this_children.py: nyero- és veszto_lepesek.json generálása
+    Fas_esetek.py: Kezdetleges gráftervezés
+    graph.py: Gráfosztály létrehozása
+    node.py: Csúcsosztály létrehozása
+    state.py: Egy állás állapotára vonatkozó osztály
+    win_state: Osztály a nyerés eldöntésére
+    show.py: Lépés kirajzolására függvények
+    strategy.py: Json-ok generálása itt történt
+    sandbox.py: Elvetett függvények
+    
+    
