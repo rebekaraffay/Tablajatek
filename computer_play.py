@@ -126,9 +126,7 @@ def convert_to_nparray(child: str):
         Eltávolítunk minden fölösleges karaktert és megpróbáljuk jól splitelni, hogy minden
         a megfelelő helyre kerüljön.
     '''
-    # todo: ellenőrizni, hogy jó-e, átmásoltam a másik konvertálásából, nem biztos, hogy ugyanolyanok
     child = child.replace("[ ", "[")
-    # print("alma", node)
     child = child.replace("]", "")  # elhagyjuk a fölösleges elemeket
     child = child.replace("[", "")
     child = child.split("\n")
@@ -136,13 +134,11 @@ def convert_to_nparray(child: str):
         child[i] = child[i].replace("  ", " ").split(" ")
     del child[1][0]
     del child[2][0]
-    # print("korte", node)
     for i in range(3):
         for j in range(3):
             child[i][j] = int(child[i][j])
 
     step = np.array(child)
-    # show.show(child)
     return step
 
 def computer_step(tabla, strategy):
@@ -170,13 +166,12 @@ def computer_step(tabla, strategy):
     if strategy == 1:
         index = random.randint(0, len(strat_1[str(tabla)])-1)
         step = strat_1[str(tabla)][index]
-        print("haha", step, type(step))
 
 
     elif dict_loser_children[str(tabla)] != []: # ha 1 lépésre vagyunk vesztéstől
-        print(dict_loser_children[str(tabla)])
-        child = dict_loser_children[str(tabla)][0]         # ha több van, akkor mindegy, csak egyet tudunk kivédeni
-        child = convert_to_nparray(child)               # most már np.array
+        index = random.randint(0, len(dict_loser_children[str(tabla)]) - 1)
+        child = dict_loser_children[str(tabla)][index] # ha több van, akkor mindegy, csak egyet tudunk kivédeni
+        child = convert_to_nparray(child)             # most már np.array
         i, j = get_different_index(tabla, child)
         step = opposite_step(child, tabla, i, j) # ellenkező lépés végrehajtása, mint amivel instant veszítene
         show.show(step)
@@ -185,10 +180,8 @@ def computer_step(tabla, strategy):
     else:
         index = random.randint(0, len(strat_2[str(tabla)])-1)
         step = strat_2[str(tabla)][index]
-        print("hihi", step, type(step))
 
     step = step.replace("[ ", "[")
-    print("alma", step)
     step = step.replace("]", "")  # elhagyjuk a fölösleges elemeket
     step = step.replace("[", "")
     step = step.split("\n")
