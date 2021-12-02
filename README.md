@@ -57,6 +57,7 @@
     strategy.py: Json-ok generálása itt történt
     sandbox.py: Elvetett függvények
 
+
 ####Stratégia és fejlesztési lehetőségek
 
     A játék tervezése abból indult ki, hogy észrevettük, ha a gép kezd és az a feladata, hogy azonos
