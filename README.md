@@ -96,5 +96,3 @@
     akkor könnyebben tudjuk ezeket numpyarray-jé alakítani.
     A játék PyGame-ba való áttétele, felhasználóbarátabb és szebb kivitelezése.
     
-    
-    

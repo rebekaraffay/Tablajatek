@@ -106,6 +106,7 @@ def jatekos_lep(tabla, strat, i):
 
 
 def multiplayer():
+    """A jatek"""
     while True:
         try:
             strat = int(input('Első játekos válassz stratégiát! 1: telítés, 2: azonos: ')) # helyes erteket adott-e meg

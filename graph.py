@@ -136,7 +136,7 @@ class Graph:
 
     def potential_new_level_tables(self):
         '''
-            Létrehozza a következő szint lehetséges ccsúcsainak tábláit.
+            Létrehozza a következő szint lehetséges csúcsainak tábláit.
         '''
 
         level = len(self.levels)
