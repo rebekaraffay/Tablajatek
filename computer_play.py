@@ -163,7 +163,12 @@ def computer_step(tabla, strategy):
     with open("azonos_esetben_vesztok.json", "r") as read_file:
         dict_loser_children = json.load(read_file)
 
-    if strategy == 1:
+    with open("teljes_szulo_gyerek_szotarak.json", "r") as read_file:
+        uj_lehetoseg = json.load(read_file)
+
+    uj_lehetoseg = uj_lehetoseg[1]
+
+    if strategy == 1: #itt mivel a telitesnel nyer a masik, nem kell kikoteseket tennunk, mint az alabbiakban, mert jol jatszik a strategiaval
         index = random.randint(0, len(strat_1[str(tabla)])-1)
         step = strat_1[str(tabla)][index]
 
@@ -178,10 +183,26 @@ def computer_step(tabla, strategy):
         return step
 
     else:
-        index = random.randint(0, len(strat_2[str(tabla)])-1) #ha nem egy lepesre vagyunk a vesztestol, itt vannak problemak,\
-        # mert ha 2 lepesre vagyunk, akkor azt nem ismeri fel, a kezdeti strategiank miatt, itt lehetne javitani a programon
-        # ehhez uj veszto_lepeseket kellene definialni
-        step = strat_2[str(tabla)][index]
+        index = random.randint(0, len(strat_2[str(tabla)])-1)
+        jo = []
+        jobb = []
+        for i in range(len(strat_2[str(tabla)])): #ha nem egy lepesre vagyunk a vesztestol
+            if dict_loser_children[strat_2[str(tabla)][i]] == []:
+                jo.append(strat_2[str(tabla)][i])
+        if len(jo) > 0:
+            ind = random.randint(0, len(jo)-1)
+            step = jo[ind]
+        else:
+            for i in range(len(uj_lehetoseg[str(tabla)])): #ha 2 lepesre vagyunk a vesztestol
+                if dict_loser_children[uj_lehetoseg[str(tabla)][i]] == []: #megnezzuk, hogy egyatalan az osszes gyerek kozul tudunk-e joba lepni
+                    jobb.append(uj_lehetoseg[str(tabla)][i])
+
+            if len(jobb) == 0:
+                step = strat_2[str(tabla)][index]
+            else:
+                ind = random.randint(0, len(jobb)-1)
+                step = jobb[ind]
+
 
 
     step = step.replace("[ ", "[")
