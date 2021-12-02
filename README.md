@@ -58,6 +58,7 @@
     sandbox.py: Elvetett függvények
 
 ####Stratégia és fejlesztési lehetőségek
+
     A játék tervezése abból indult ki, hogy észrevettük, ha a gép kezd és az a feladata, hogy azonos
     sort/oszlopot vagy csupa o sort/oszlopot létesítsen, akkor neki mindig van nyerő stratégiája.
     Ezt a külön esetet megírtuk a Jatek.py file-ban. Azt láttuk, ha a gép középre tesz egy o-t, majd 
