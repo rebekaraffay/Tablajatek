@@ -69,7 +69,7 @@
     valójában gráf- és csúcsosztályokkal hatékonyabban tudunk dolgozni.
     Így létrehoztuk a graph.py, node.py és state.py által tartalmazott osztályokat. Ezeken belül
     írtuk meg a legtöbb függvényt, amelyek a játék alapját adják. Mivel kb 20000 csúcsunk van és 2 
-    szint között van olyan, hogy kb 8000000 élet kell létesítenünk, így a gráfothoz tartozó főbb 
+    szint között van olyan, hogy kb 8000000 él létezését kell ellenőrizni, így a gráfokhoz tartozó főbb 
     szótárakat json fileokba kimentettük, mert a gráflétesítés futási idejét a 30-40 percről 15-18
     szűkítve sem optimális, hogy 1 játék előtt ennyit kelljen várni.
     Először olyan stratégián gondolkodtunk, hogy alulról kezdve végigcímkézzük a csúcsokat,
