@@ -25,11 +25,11 @@ class Graph:
 
     def save_datas(self):
         '''
-        Csináljunk szótárakat, listát és majd azokat akarom elmenteni.
-        A levelek listában a gráf szinjeinek csúcsait tárolom el.
-        Szintén a self.levels segítségével végigjárom az összes csúcsot és elmentem a gyerekeket
-        és szülőket 1-1 szótárba, ahol az adott csúcs a kulcs.
-        Mindennek a np.array tábláját mentem el, a szótárakban stringesitve vannak a kulcsok es az ertekek is.
+            Csináljunk szótárakat, listát és majd azokat akarom elmenteni.
+            A levelek listában a gráf szinjeinek csúcsait tárolom el.
+            Szintén a self.levels segítségével végigjárom az összes csúcsot és elmentem a gyerekeket
+            és szülőket 1-1 szótárba, ahol az adott csúcs a kulcs.
+            Mindennek a np.array tábláját mentem el, a szótárakban stringesitve vannak a kulcsok es az ertekek is.
         '''
         self.list_levels = [[node.state.table for node in level] for level in self.levels]
 
@@ -47,6 +47,7 @@ class Graph:
                 if node.parents is not None else []
         self.dict_parents = dict_parents
 
+        # amikor a gép telíteni szeretne, egy csúcsnak van-e olyan gyereke, ami teljesíti valameliyk záró feltételt
         dict_loser_children = {}
         for lev in self.levels:
             for node in lev:
@@ -55,9 +56,6 @@ class Graph:
                                                                   if child.state.who_won() == 0]
 
         self.dict_loser_children = dict_loser_children
-
-
-
 
 
         # Ellenőrzések
@@ -74,7 +72,9 @@ class Graph:
         return dict_loser_children
 
     def dict_walk(self):
-        """Azon szotar letrehozasa, amely megmondja, hogy egy csucsbol hany ut vezet nyero illetve veszto csucsba"""
+        '''
+            Azon szotar letrehozasa, amely megmondja, hogy egy csucsbol hany ut vezet nyero illetve veszto csucsba.
+        '''
         dict_walks = {}
         for level in reversed(self.levels):
             for node in level:
@@ -94,7 +94,8 @@ class Graph:
 
     def generate_graph(self):
         '''
-        Az első szintet a gyökérből képzem, majd rekurzívan az előzőekből, amíg nem csak levélből áll egy szint.
+            A gráf elkészítése.
+            Az első szintet a gyökérből képzem, majd rekurzívan az előzőekből, amíg nem csak levélből áll egy szint.
         '''
         start = time.perf_counter()
         self.levels.append([self.root])
@@ -108,34 +109,34 @@ class Graph:
 
     def generate_new_level(self, leafless_current_level: List[Node]):
         '''
-        Létrehozom egy új szint összes lehetséges csúcsát táblákként.
-        Csúcsokat csinálok belőlük.
-        Létrehozom az előző szinttel való éleket.
-        Eltárolom a nem végállapotú szülős csúcsokat a gráf új szintjeként.
-        A nem levél csúcsokat eltárolom a következő szint leafless_current listájának.
+            Létrehozom egy új szint összes lehetséges csúcsát táblákként.
+            Csúcsokat csinálok belőlük.
+            Létrehozom az előző szinttel való éleket.
+            Eltárolom a nem végállapotú szülős csúcsokat a gráf új szintjeként.
+            A nem levél csúcsokat eltárolom a következő szint leafless_current listájának.
         '''
-        ts = time.perf_counter()
+        # ts = time.perf_counter()
         pot_new_lev_tab = self.potential_new_level_tables()
-        ts2 = time.perf_counter()
+        # ts2 = time.perf_counter()
         pot_new_lev_nodes = [Node(State(table)) for table in pot_new_lev_tab]
-        ts3 = time.perf_counter()
+        # ts3 = time.perf_counter()
         self.generate_edges(pot_new_lev_nodes, leafless_current_level)
-        ts4 = time.perf_counter()
+        # ts4 = time.perf_counter()
         new_level_nodes = [child for child in pot_new_lev_nodes if len(child.parents) > 0]
         self.levels.append(new_level_nodes)
-        ts5 = time.perf_counter()
+        # ts5 = time.perf_counter()
         leafless_new_level = [child for child in new_level_nodes if not child.is_leaf()]
-        ts6 = time.perf_counter()
-        print(f"generate pot. tabées {ts2-ts}")
-        print(f"node-osítás {ts3-ts2}")
-        print(f"setting edges {ts4-ts3}, {len(pot_new_lev_nodes)}, {len(leafless_current_level)}")
-        print(f"kill unreal nodes {ts5-ts4}")
-        print(f"select leaf nodes {ts6-ts5}")
+        # ts6 = time.perf_counter()
+        # print(f"generate pot. tabées {ts2-ts}")
+        # print(f"node-osítás {ts3-ts2}")
+        # print(f"setting edges {ts4-ts3}, {len(pot_new_lev_nodes)}, {len(leafless_current_level)}")
+        # print(f"kill unreal nodes {ts5-ts4}")
+        # print(f"select leaf nodes {ts6-ts5}")
         return leafless_new_level
 
     def potential_new_level_tables(self):
         '''
-        Létrehozza a következő szint lehetséges ccsúcsainak tábláit.
+            Létrehozza a következő szint lehetséges ccsúcsainak tábláit.
         '''
 
         level = len(self.levels)
@@ -148,7 +149,7 @@ class Graph:
 
     def generate_edges(self, new_level: List[Node], last_level: List[Node]):
         '''
-        Létrehozza a 2 szint elemeinek children és parents listáját, amit a node classban kértünk.
+            Létrehozza a 2 szint elemeinek children és parents listáját, amit a node classban kértünk.
         '''
         for child in new_level:
             parents = [parent for parent in last_level if State.is_relate(parent.state.table, child.state.table)]

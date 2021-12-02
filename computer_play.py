@@ -148,10 +148,7 @@ def computer_step(tabla, strategy):
         Kész szótárból szedi ki a lépéseket. (ELtároltuk, hogy egy adott csúcsból hova érdemes lépni
         a különböző stratégiák esetén.
         A 2-esnél nagyon rosszul működik a nyertes / vesztes gyerekek számának arányán alapuló stratégia,
-        ezért kicsit rásegítettünk. Nem ismerte fel azokat a helyzeteket, amikor már csak 1 lépés hiányzott a
-        biztos veszteséghez, ezért azoknál külön meghatározzuk a lépéseit. Ha egy csúcsnak van vesztes gyereke,
-        azokat eltároltuk egy újabb szótárban. Ha több van, akkor is csak egyet tudunk megúszni, ezért az elsőt
-        elrontjuk úgy, hogy pont az ellenkezőjét lépjük.
+        ezért kicsit rásegítettünk.
     '''
     # szótárak beolvasása jsonból
     with open("nyero_lepesek.json", "r") as read_file:
@@ -204,9 +201,9 @@ def computer_step(tabla, strategy):
                 step = jobb[ind]
 
 
-
+    # átalakítjuk a jsonból beolvasott stringet np.array formátumba
     step = step.replace("[ ", "[")
-    step = step.replace("]", "")  # elhagyjuk a fölösleges elemeket
+    step = step.replace("]", "")
     step = step.replace("[", "")
     step = step.split("\n")
     for i in range(len(step)):
@@ -222,7 +219,9 @@ def computer_step(tabla, strategy):
     return step
 
 def final_game():
-
+    '''
+        Felhasználó, gép egymás után lépése.
+    '''
     while True:
         try:
             hanyadik = int(input('Hányadik játékos szeretnél lenni {1,2}? ')) # ellenorzes
