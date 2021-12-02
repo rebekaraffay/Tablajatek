@@ -90,8 +90,7 @@
     gyereke, ami nyerő volt az ellenfél számára. Erre is írtunk egy külön ágat és meg tudtuk oldani,
     hogy ha van más választása, akkor ne olyan állásra lépjen.
     Így ezekkel a módosításokkal olyan stratégiát írtunk, amely még akkor is, ha telítésre törekszik,
-    és alapvetően nem lenne nyerő stratégiája, úgy lép, hogy a lehető leghosszabb játékot játssza, ha 
-    az ellenfele jól rak. Képes legyőzni a játékost, ha az akár csak 1 rossz lépést tesz.
+    és alapvetően nem lenne nyerő stratégiája, úgy lép, hogy a lehető leghosszabb játékot játssza.
 
     A fejleszthetési lehetőségekbe tartozik az eredi tervünk (nyerő/vesztő címkézés) megvalósítása, 
     annak tökéletesítése.
