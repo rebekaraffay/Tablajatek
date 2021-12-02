@@ -33,17 +33,17 @@ def check(tabla, strat):
     """
     if Jatek.van_sor(tabla) or Jatek.van_oszlop(tabla) or Jatek.azonos_sor_oszlop(tabla): #ha teljesulnek a nyeresi feltetelek
         if strat == 2:
-            show.show(tabla, title="Az elso jatekos nyert")
+            show.show(tabla, title="Az első játékos nyert") #cimet is allitunk be
             return False
         else:
-            show.show(tabla, title="A masodik jatekos nyert")
+            show.show(tabla, title="A második játékos nyert")
             return False
     elif -1 not in tabla:
         if strat == 2:
-            show.show(tabla, title="A masodik jatekos nyert")
+            show.show(tabla, title="A második játékos nyert")
             return False
         else:
-            show.show(tabla, title="Az elso jatekos nyert")
+            show.show(tabla, title="Az első játékos nyert")
             return False
     # ha nem teljesulnek a nyeresi feltetelek:
     return True
@@ -76,7 +76,7 @@ def jatekos_lep(tabla, strat, i):
 
     while True:
         try:
-            ertek = str(input('Az ertek {x,o}: '))
+            ertek = str(input('Az érték {x,o}: '))
             if ertek not in ['x', 'o']:
                 raise ErtekOutOfRange
             break
@@ -88,14 +88,14 @@ def jatekos_lep(tabla, strat, i):
 
     if i % 2 == 1:
         print(i // 2 + 1, ". round")
-        print("Elso jatekos lepese: ")
+        print("Első játékos lépése: ")
 
         show.show(tabla)
 
         if check(tabla, strat):  # ha nem nyert, akkor lephet a kovetkezo
             jatekos_lep(tabla, strat, i+1)
     else:
-        print("Masodik jatekos lepese: ")
+        print("Második játékos lépése: ")
 
         show.show(tabla)
 
@@ -108,7 +108,7 @@ def jatekos_lep(tabla, strat, i):
 def multiplayer():
     while True:
         try:
-            strat = int(input('Elso jatekos valassz strategiat! 1: telites, 2: azonos: ')) # helyes erteket adott-e meg
+            strat = int(input('Első játekos válassz stratégiát! 1: telítés, 2: azonos: ')) # helyes erteket adott-e meg
             if strat not in range(1,3):
                 raise ErtekOutOfRange
             break

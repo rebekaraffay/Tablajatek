@@ -69,7 +69,7 @@ def jatekos_lep(tabla, strat, hanyadik, i):
     # Mit szeretne lépni a felhasználó
     while True:
         try:
-            ertek = str(input('Az ertek {x,o}: '))
+            ertek = str(input('Az érték {x,o}: '))
             if ertek not in ['x', 'o']:
                 raise ErtekOutOfRange
             break
@@ -82,14 +82,14 @@ def jatekos_lep(tabla, strat, hanyadik, i):
     if hanyadik == 1:
         print(i, ". round:")
         i = i+1
-    print("Felhasznalo lepese: ")
+    print("A játékos lépése: ")
     show.show(tabla)
     # ellenőrizzük, hogy vége van-e a játéknak
     if check(tabla,strat):
         if hanyadik == 2:
             print(i, ".round")
             i = i+1
-            print("A gep lepese: ")
+            print("A gép lépése: ")
         tabla = computer_step(tabla, strat)
         if check(tabla, strat):
             jatekos_lep(tabla, strat, hanyadik, i)
@@ -225,10 +225,10 @@ def final_game():
 
     while True:
         try:
-            hanyadik = int(input('Hanyadik jatekos szeretnél lenni {1,2}? '))
+            hanyadik = int(input('Hányadik játékos szeretnél lenni {1,2}? ')) # ellenorzes
             if hanyadik not in range(1,3):
                 raise ErtekOutOfRange
-            strat = int(input('Válassz strategiat! 1: telítés, 2: azonos '))
+            strat = int(input('Válassz stratégiát! 1: telítés, 2: azonos '))
             if strat not in range(1,3):
                 raise ErtekOutOfRange
             break
@@ -236,14 +236,14 @@ def final_game():
             print("Az értéknek 1-nek vagy 2-nek kell lennie.")
 
     tabla = np.array([[-1, -1, -1], [-1, -1, -1], [-1, -1, -1]])
-    print("Kezdo allapot: ")
+    print("Kezdő állapot: ")
     show.show(tabla)
     if hanyadik == 1:
-        jatekos_lep(tabla, strat, hanyadik, 1)
+        jatekos_lep(tabla, strat, hanyadik, 1) # jatekos kezd
     else:
         print("1. round")
-        print("A gep lepese: ")
-        tabla = computer_step(tabla, strat)
+        print("A gép lépése: ")
+        tabla = computer_step(tabla, strat) #gep kezd
         jatekos_lep(tabla, strat, hanyadik, 2)
 
 if __name__ == "__main__":
