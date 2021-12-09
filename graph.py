@@ -54,6 +54,9 @@ class Graph:
                 if node.children is not None:
                     dict_loser_children[str(node.state.table)] = [str(child.state.table) for child in node.children \
                                                                   if child.state.who_won() == 0]
+                else:
+                    if node.state.who_won() == 1:               #baj ha utolso lepesnel vagyunk
+                        dict_loser_children[str(node.state.table)] = []
 
         self.dict_loser_children = dict_loser_children
 
