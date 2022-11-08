@@ -90,6 +90,8 @@ def jatekos_lep(tabla, strat, hanyadik, i):
             print(i, ".round")
             i = i+1
             print("A gép lépése: ")
+        else:
+            print("A gép lépése: ")
         tabla = computer_step(tabla, strat)
         if check(tabla, strat):
             jatekos_lep(tabla, strat, hanyadik, i)
