@@ -56,9 +56,12 @@
     Initially, we used NetworkX’s directed graph (Fas_esetek.py) but found that working with custom graph and 
     node classes (graph.py, node.py, state.py) was more efficient.
 
-    These classes implement most of the functions forming the game's foundation. Given the approximately 20,000 nodes and the need to check up to 8,000,000 edges between two levels, we saved the main graph dictionaries as JSON files. This reduced graph creation time from 30–40 minutes to 15–18 minutes, but it’s still not ideal to wait this long before playing.
+    These classes implement most of the functions forming the game's foundation. Given the approximately 20,000 nodes and the need
+    to check up to 8,000,000 edges between two levels, we saved the main graph dictionaries as JSON files. This reduced graph 
+    creation time from 30–40 minutes to 15–18 minutes, but it’s still not ideal to wait this long before playing.
 
-    Initially, we considered labeling nodes bottom-up as winning or losing. However, higher levels in the graph led to contradictions. We separated cases based on who starts. The main principle became:
+    Initially, we considered labeling nodes bottom-up as winning or losing. However, higher levels in the graph 
+    led to contradictions. We separated cases based on who starts. The main principle became:
     - If the computer can move to a winning state, the starting node is winning; otherwise, it’s losing.
     - If the opponent moves and can force a losing state, the starting node is losing; otherwise, it’s winning.
 
@@ -66,7 +69,8 @@
     - Count paths leading to winning and losing states from each node.
     - Choose the child with the best ratio of winning to losing paths (or pre-select nodes with zero losing paths).
     - For the computer aiming for identical rows/columns, this works well.
-    - For filling rows/columns, problems arose. The computer did not block the opponent’s winning moves or avoided states leading to opponent wins. Separate functions and dictionaries resolved these issues.
+    - For filling rows/columns, problems arose. The computer did not block the opponent’s winning moves or avoided
+    states leading to opponent wins. Separate functions and dictionaries resolved these issues.
 
     Development Opportunities:
     - Implementing and refining our original plan (winning/losing labeling).
