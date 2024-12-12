@@ -17,7 +17,8 @@
     - Winning is defined as having identical rows/columns or a row/column of o's.
     - Keys: States.
     - Values: Number of paths.
-    nyero_lepesek.json: For a given board state, it specifies the best child states to move into, based on the ratio of winning to losing paths of the child states.
+    nyero_lepesek.json: For a given board state, it specifies the best child states to move into, based on the ratio 
+    of winning to losing paths of the child states.
     - Keys: States.
     - Values: Best moves, if aiming for identical rows/columns.
     veszto_lepesek.json: Similar to nyero_lepesek.json, but targets filled rows/columns.
@@ -46,9 +47,14 @@
     sandbox.py: Functions not used in the final version.
 
 #### Strategy and Development Opportunities
-    The game design started with the observation that if the computer begins and aims to create identical rows/columns or a row/column of o's, it always has a winning strategy. This special case is implemented in Jatek.py. It was noted that if the computer places an o in the center and mirrors the player’s moves, it always wins.
+    The game design started with the observation that if the computer begins and aims to create identical rows/columns or 
+    a row/column of o's, it always has a winning strategy. This special case is implemented in Jatek.py. 
+    It was noted that if the computer places an o in the center and mirrors the player’s moves, it always wins.
 
-    For other game types, no simple strategies were found, so graph-based methods were used. Each board state corresponds to a node, and edges are drawn between nodes if one state can transition to another in one move. Edges were treated as directed. Initially, we used NetworkX’s directed graph (Fas_esetek.py) but found that working with custom graph and node classes (graph.py, node.py, state.py) was more efficient.
+    For other game types, no simple strategies were found, so graph-based methods were used. Each board state corresponds to a node,
+    and edges are drawn between nodes if one state can transition to another in one move. Edges were treated as directed. 
+    Initially, we used NetworkX’s directed graph (Fas_esetek.py) but found that working with custom graph and 
+    node classes (graph.py, node.py, state.py) was more efficient.
 
     These classes implement most of the functions forming the game's foundation. Given the approximately 20,000 nodes and the need to check up to 8,000,000 edges between two levels, we saved the main graph dictionaries as JSON files. This reduced graph creation time from 30–40 minutes to 15–18 minutes, but it’s still not ideal to wait this long before playing.
 
