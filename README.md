@@ -1,3 +1,73 @@
+# Board Game
+#### Rules of the Game
+    Played on a 3x3 board by two players.
+    Either player can place one of two symbols (o or x) on the squares; no dedicated symbol for each player.
+    One player (to be agreed upon in advance) wins if:
+    - There are two identical (filled) rows or columns,
+    - Or if three o's are aligned in a row.
+    If none of the above conditions are met after placing nine symbols, the other player wins.
+
+#### Content
+###### JSON Files
+    teljes_szulo_gyerek_szotarak.json: For a given board state, it specifies:
+    - From which states it can be reached and to which states it can transition (moves are one step long).
+    - Keys: States.
+    - Values: Parents or children (two dictionaries combined: the first contains parents, the second children).
+    proba_seta_teljes.json: For a given board state, it specifies how many paths lead to winning or losing states.
+    - Winning is defined as having identical rows/columns or a row/column of o's.
+    - Keys: States.
+    - Values: Number of paths.
+    nyero_lepesek.json: For a given board state, it specifies the best child states to move into, based on the ratio of winning to losing paths of the child states.
+    - Keys: States.
+    - Values: Best moves, if aiming for identical rows/columns.
+    veszto_lepesek.json: Similar to nyero_lepesek.json, but targets filled rows/columns.
+    - Keys: States.
+    - Values: Best moves for filling rows/columns.
+    proba.json: Similar to teljes_szulo_gyerek_szotarak.json, but parents or children are stored in list format.
+    - Keys: States.
+    - Values: Parents or children (list format).
+    azonos_esetben_vesztok.json: Identifies states with losing children (a node is losing if it contains identical/o rows/columns).
+    - Keys: States.
+    - Values: Losing children.
+
+###### Python Files
+    main_game.py: The game itself. Run this to play.
+    Jatek.py: Version where the computer starts and aims for identical rows/columns.
+    computer_play.py: Version for playing against the computer.
+    multiplayer.py: Version for two players.
+    choose_this_children.py: Generates nyero_lepesek.json and veszto_lepesek.json.
+    Fas_esetek.py: Initial graph design.
+    graph.py: Creates the graph class.
+    node.py: Creates the node class.
+    state.py: Defines the class for board states.
+    win_state.py: Class for determining winning conditions.
+    show.py: Functions for visualizing moves.
+    strategy.py: Generates the JSON files.
+    sandbox.py: Functions not used in the final version.
+
+#### Strategy and Development Opportunities
+    The game design started with the observation that if the computer begins and aims to create identical rows/columns or a row/column of o's, it always has a winning strategy. This special case is implemented in Jatek.py. It was noted that if the computer places an o in the center and mirrors the player’s moves, it always wins.
+
+    For other game types, no simple strategies were found, so graph-based methods were used. Each board state corresponds to a node, and edges are drawn between nodes if one state can transition to another in one move. Edges were treated as directed. Initially, we used NetworkX’s directed graph (Fas_esetek.py) but found that working with custom graph and node classes (graph.py, node.py, state.py) was more efficient.
+
+    These classes implement most of the functions forming the game's foundation. Given the approximately 20,000 nodes and the need to check up to 8,000,000 edges between two levels, we saved the main graph dictionaries as JSON files. This reduced graph creation time from 30–40 minutes to 15–18 minutes, but it’s still not ideal to wait this long before playing.
+
+    Initially, we considered labeling nodes bottom-up as winning or losing. However, higher levels in the graph led to contradictions. We separated cases based on who starts. The main principle became:
+    - If the computer can move to a winning state, the starting node is winning; otherwise, it’s losing.
+    - If the opponent moves and can force a losing state, the starting node is losing; otherwise, it’s winning.
+
+    Our final strategy:
+    - Count paths leading to winning and losing states from each node.
+    - Choose the child with the best ratio of winning to losing paths (or pre-select nodes with zero losing paths).
+    - For the computer aiming for identical rows/columns, this works well.
+    - For filling rows/columns, problems arose. The computer did not block the opponent’s winning moves or avoided states leading to opponent wins. Separate functions and dictionaries resolved these issues.
+
+    Development Opportunities:
+    - Implementing and refining our original plan (winning/losing labeling).
+    - Saving dictionary keys and values in formats easier to convert to NumPy arrays.
+    - Transitioning the game to PyGame for a more user-friendly and visually appealing experience.
+
+
 # Táblajáték
 #### Játékszabály
     3*3-as táblán játsza két személy, 
